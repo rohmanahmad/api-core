@@ -3,7 +3,7 @@ const routes = [
     {
         method: 'GET',
         url: '/',
-        version: '1.0.0', // untuk header
+        // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
             tags: ['User Account'],
             summary: 'User Information',
@@ -13,10 +13,10 @@ const routes = [
                   "apiKey": []
                 }
             ],
-            querystring: {
-                name: { type: 'string' },
-                excitement: { type: 'integer' }
-            },
+            querystring: [
+                'name',
+                'fullname'
+            ],
             response: {
                 200: {
                     type: 'object',
@@ -26,7 +26,9 @@ const routes = [
                 }
             }
         },
-        preHandler: [],
+        preHandler: [
+            'Authentication'
+        ],
         handler: 'UserController.me'
     }
 ]

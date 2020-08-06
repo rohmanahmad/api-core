@@ -2,7 +2,7 @@
 
 class HomeController {
     constructor () {}
-    async index (request, response) {
+    async main (request, response) {
         response.send('ini index')
     }
 }

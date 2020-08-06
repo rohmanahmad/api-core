@@ -1,5 +1,6 @@
 'use strict'
 
+const moment = require('moment-timezone')
 const helmet = require('fastify-helmet')
 const fastifyEnv = require('fastify-env')
 const fastify = require('fastify')({
@@ -21,8 +22,11 @@ const fastify = require('fastify')({
     ignoreTrailingSlash: true, // registers both "/foo" and "/foo/" :: tanpa / dibelakang atau tidak, sama saja
     caseSensitive: true // https://www.fastify.io/docs/latest/Server/#casesensitive
 })
-const injections = require('./bootstrap') // {use: function}
-const route = require('./routes/route')
+const {plugin, use} = require('./bootstrap') // {use: function}
+const route = require('./modules/v1.0/routes')
+
+// fastify.register(plugin)
+fastify.decorate('include', use)
 
 /* Helmet : https://github.com/fastify/fastify-helmet */
 fastify.register(helmet, {
@@ -48,76 +52,60 @@ fastify.register(fastifyEnv, {
 })
 
 /* db postgresql : https://github.com/fastify/fastify-postgres */
-fastify.register(require('fastify-postgres'), {
+fastify.register(require('fastify-postgres'), function () {
+  return {
     connectionString: process.env.POSTGRESQL_DSN
+  }
 })
 
-/* documentation */
-fastify.register(require('fastify-swagger'), {
-  routePrefix: '/api/documentation',
-  swagger: {
-    info: {
-      title: 'API Documentation',
-      description: 'Documentation for Current API',
-      version: '0.1.0'
-    },
-    externalDocs: {
-      url: 'https://swagger.io',
-      description: 'Find more info here'
-    },
-    host: 'localhost',
-    schemes: ['http'],
-    consumes: ['application/json'],
-    produces: ['application/json'],
-    tags: [
-      { name: 'Home', description: 'All About Home Routes' },
-      { name: 'Users', description: 'All About User Routes' },
-      { name: 'UKM', description: 'All About UKM Routes' },
-      { name: 'Customers', description: 'All About Customers Routes' },
-      { name: 'Products', description: 'All About Products Routes' },
-      { name: 'Transactions', description: 'All About Transaction Routes' },
-      { name: 'Shipping', description: 'All About Shipping Routes' },
-      { name: 'Configurations', description: 'All About Configuration Routes' },
-      { name: 'Conversations', description: 'All About Conversation Routes' }
-    ],
-    definitions: {
-      User: {
-        $id: 'User',
-        type: 'object',
-        required: ['id', 'email'],
-        properties: {
-          id: { type: 'string', format: 'uuid' },
-          firstName: { type: 'string', nullable: true },
-          lastName: { type: 'string', nullable: true },
-          email: {type: 'string', format: 'email' }
-        }
-      }
-    },
-    securityDefinitions: {
-      apiKey: {
-        type: 'apiKey',
-        name: 'apiKey',
-        in: 'header'
-      }
-    }
-  },
-  exposeRoute: true
-})
+/* documentation : https://github.com/fastify/fastify-swagger*/
+fastify.register(require('fastify-swagger'), use('configurations', 'Swagger'))
 
 /* registering routes */
 // register route harus dibawah nya swagger, karena swagger membaca schema yg di dapat dari masing2 routes yg didaftarkan
-fastify.register(route(injections))
+fastify.register(route(fastify))
 
+/* set notfound response handler */
+fastify.setNotFoundHandler({}, function (request, response) {
+  response.send({
+    message: `(${request.url}) Route not found`,
+    error: 'You need add custom headers like accept-version and another header',
+    statusCode: 404
+  })
+})
+
+/* set error response handler */
+fastify.setErrorHandler(function (err, request, response) {
+  response
+    .status(500)
+    .send({
+      statusCode: 500,
+      message: err.message,
+      processId: request.id
+    })
+})
+
+console.logger = function (...args) {
+  console.log(`[${moment().tz('Asia/Jakarta').format('LLL')}]`, ...args)
+}
+/* trying to open port */
 fastify.ready(function (err) {
     if (err) {
-        console.log(err)
-        process.env(1)
+        console.error(err)
+        process.exit(0)
     }
     fastify.swagger()
     fastify.listen(process.env.APP_PORT)
-        .then((address) => console.log(`server listening on ${address}`))
-        .catch(err => {
-            console.log('Error starting server:', err)
-            process.exit(1)
-        })
+      .then(async (address) => {
+        const ActivityService = fastify.include('services', 'TaskService')(fastify)
+        ActivityService
+          .createRestartActivity()
+          .then(function () {
+            console.log(`server listening on ${address}`)
+          })
+      })
+      .catch((err) => {
+          console.error(err)
+          process.exit(0)
+      })
 })

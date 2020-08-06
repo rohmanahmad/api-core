@@ -3,7 +3,7 @@ const routes = [
     {
         method: 'GET',
         url: '/',
-        version: '1.0.0', // untuk header
+        // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
             tags: ['Home'],
             summary: 'Home',
@@ -13,9 +13,10 @@ const routes = [
                   "apiKey": []
                 }
             ],
-            querystring: {
-                name: { type: 'string' },
-                excitement: { type: 'integer' }
+            // required: ['accept-version'],
+            querystring: [],
+            headers: {
+                // 'accept-version': {type: 'string', default: '1.0.0'}
             },
             response: {
                 200: {
@@ -26,8 +27,10 @@ const routes = [
                 }
             }
         },
-        preHandler: [],
-        handler: 'HomeController.index'
+        preHandler: [
+            'Authentication'
+        ],
+        handler: 'HomeController.main'
     }
 ]
 
