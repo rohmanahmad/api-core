@@ -1,5 +1,6 @@
 const controllers = {
     AuthenticationController: require('./modules/v1.0/controllers/AuthenticationController'),
+    CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
     UserController: require('./modules/v1.0/controllers/UserController'),
     HomeController: require('./modules/v1.0/controllers/HomeController')
 }
@@ -12,6 +13,7 @@ const models = {
 const routes = {
     AuthenticationRoutes: require('./modules/v1.0/routes/components/AuthenticationRoutes'),
     UserRoutes: require('./modules/v1.0/routes/components/UserRoutes'),
+    CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
     HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes')
 }
 

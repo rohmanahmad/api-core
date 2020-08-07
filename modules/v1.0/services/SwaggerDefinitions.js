@@ -3,7 +3,11 @@ const {result} = require('lodash')
 const definitions = {
     querystring: {
         name: {type: 'string'},
+        category_id: {type: 'string'},
+        category_name: {type: 'string'},
         fullname: {type: 'string'},
+        state: {type: 'string'},
+        redirect_uri: {type: 'string'},
     },
     body: {
         username: {type: 'string'},

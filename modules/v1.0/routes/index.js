@@ -24,14 +24,14 @@ module.exports = function (instance) {
                 if (querySchema) {
                     if (!isArray(querySchema)) throw new Error(`(${routerFile}) [${route['url']}] QueryString Harus Berupa Array!`)
                     const queryTransformation = querySchema.reduce((r, x) => {
-                        return {r, ...definition(`querystring.${x}`)}
+                        return {...r, ...definition(`querystring.${x}`)}
                     }, {})
                     set(route, 'schema.querystring', queryTransformation)
                 }
                 if (paramSchema) {
                     if (!isArray(paramSchema)) throw new Error(`(${routerFile}) [${route['url']}] Parameters Harus Berupa Array!`)
                     const paramTransformation = paramSchema.reduce((r, x) => {
-                        return {r, ...definition(`params.${x}`)}
+                        return {...r, ...definition(`params.${x}`)}
                     }, {})
                     set(route, 'schema.params', paramTransformation)
                 }

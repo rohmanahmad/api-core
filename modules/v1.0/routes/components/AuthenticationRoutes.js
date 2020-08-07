@@ -30,7 +30,7 @@ const routes = [
         preHandler: [
         ],
         handler: 'AuthenticationController.loginUKMUser'
-    }
+    },
 ]
 
 module.exports = {routes, prefix}
