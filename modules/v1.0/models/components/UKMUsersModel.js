@@ -36,7 +36,7 @@ class UKMUsersModel extends Models {
             } = this.messages
             const hashPassword = md5(password)
             const sql = `SELECT * FROM ${this.tableName} WHERE ukm_user_email = $1 AND ukm_user_password = $2`
-            const query = await this.query(sql, [email, hashPassword])
+            const query = await this.execquery(sql, [email, hashPassword])
             if (!query) throw new Error(invalidUserAndPasswordMessage)
 
         } catch (err) {
@@ -48,7 +48,7 @@ class UKMUsersModel extends Models {
         const sql = `INSERT INTO ${this.tableName}
             (ukm_user_email, ukm_user_password, ukm_user_fullname, ukm_user_token, is_active, is_blocked, ukm_id, created_at, updated_at)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
-        await this.query(sql, [
+        await this.execquery(sql, [
             'rohmanmail@gmail.com',
             password,
             'akhmad abdul rohman',

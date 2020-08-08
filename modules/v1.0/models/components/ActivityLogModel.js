@@ -20,7 +20,7 @@ class UsersModel extends Models {
 
     async createRestartActivity () {
         try {
-            await this.query(
+            await this.execquery(
                 `INSERT INTO ${this.tableName} (server_ip, type, data, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`, [
                     '127.0.0.1',
                     'restart-server',

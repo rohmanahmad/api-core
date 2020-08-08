@@ -19,6 +19,7 @@ const fastify = require('fastify')({
           }
         }
     },
+    // connectionTimeout: 1000 * 60 * 10,
     ignoreTrailingSlash: true, // registers both "/foo" and "/foo/" :: tanpa / dibelakang atau tidak, sama saja
     caseSensitive: true // https://www.fastify.io/docs/latest/Server/#casesensitive
 })
@@ -27,6 +28,12 @@ const route = require('./modules/v1.0/routes')
 
 // fastify.register(plugin)
 fastify.decorate('include', use)
+
+// avoid duplicate incloming request with same id
+fastify.addHook('preHandler', function (request, reply, done) {
+  console.log('::::', request.id)
+  done()
+})
 
 /* Helmet : https://github.com/fastify/fastify-helmet */
 fastify.register(helmet, {
@@ -76,6 +83,7 @@ fastify.setNotFoundHandler({}, function (request, response) {
 
 /* set error response handler */
 fastify.setErrorHandler(function (err, request, response) {
+  console.error(err)
   response
     .status(500)
     .send({

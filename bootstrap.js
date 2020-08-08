@@ -2,11 +2,14 @@ const controllers = {
     AuthenticationController: require('./modules/v1.0/controllers/AuthenticationController'),
     CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
     UserController: require('./modules/v1.0/controllers/UserController'),
+    ProductsController: require('./modules/v1.0/controllers/ProductsController'),
     HomeController: require('./modules/v1.0/controllers/HomeController')
 }
 
 const models = {
     UKMUsersModel: require('./modules/v1.0/models/components/UKMUsersModel'),
+    CategoriesModel: require('./modules/v1.0/models/components/CategoriesModel'),
+    ProductsModel: require('./modules/v1.0/models/components/ProductsModel'),
     ActivityLogModel: require('./modules/v1.0/models/components/ActivityLogModel')
 }
 
@@ -14,13 +17,15 @@ const routes = {
     AuthenticationRoutes: require('./modules/v1.0/routes/components/AuthenticationRoutes'),
     UserRoutes: require('./modules/v1.0/routes/components/UserRoutes'),
     CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
+    ProductsRoutes: require('./modules/v1.0/routes/components/ProductsRoutes'),
     HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes')
 }
 
 const services = {
     AuthenticationService: require('./modules/v1.0/services/AuthenticationService'),
-    UserService: require('./modules/v1.0/services/UserService'),
+    CategoriesService: require('./modules/v1.0/services/CategoriesService'),
     SwaggerDefinitions: require('./modules/v1.0/services/SwaggerDefinitions'),
+    ProductsService: require('./modules/v1.0/services/ProductsService'),
     TaskService: require('./modules/v1.0/services/TaskService'),
 }
 

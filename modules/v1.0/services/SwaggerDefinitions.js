@@ -2,12 +2,28 @@ const {result} = require('lodash')
 
 const definitions = {
     querystring: {
-        name: {type: 'string'},
+        // C
         category_id: {type: 'string'},
         category_name: {type: 'string'},
+        // F
         fullname: {type: 'string'},
-        state: {type: 'string'},
+        // L
+        limit: {type: 'number'},
+        // N
+        name: {type: 'string'},
+        // P
+        page: {type: 'number'},
+        pagination: {type: 'string', enum: ['yes', 'no']},
+        product_id: {type: 'number'},
+        product_name: {type: 'string'},
+        product_stock: {type: 'number'},
+        product_status: {type: 'number'},
+        // R
         redirect_uri: {type: 'string'},
+        // S
+        sort_by: {type: 'string'},
+        sort_dir: {type: 'string'},
+        state: {type: 'string'},
     },
     body: {
         username: {type: 'string'},

@@ -1,9 +1,10 @@
 'use strict'
 
-class CategoriesController {
+class ProductsController {
     constructor () {}
-    async main (request, response) {
-        const srv = this.include('services', 'CategoriesService')(this)
+    async list (request, response) {
+        console.log(request.url)
+        const srv = this.include('services', 'ProductsService')(this)
         const {items, count, filters, pagination} = await srv.list(request.query, request.url)
         response.send({
             statusCode: 200,
@@ -20,7 +21,7 @@ class CategoriesController {
     }
 
     async total (request, response) {
-        const srv = this.include('services', 'CategoriesService')(this)
+        const srv = this.include('services', 'ProductsService')(this)
         const {total, filters} = await srv.getTotal(request.query)
         response.send({
             statusCode: 200,
@@ -36,6 +37,7 @@ class CategoriesController {
 }
 
 module.exports = function (handler, config = {}) {
-    const c = new CategoriesController(config)
+    const c = new ProductsController(config)
+    console.log('****')
     return c[handler]
 }

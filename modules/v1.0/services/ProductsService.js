@@ -1,14 +1,15 @@
 'use strict'
 
-class CategoriesService {
+class ProductsService {
     constructor (instance) {
         this.instance = instance
     }
 
     async list (filter = {}, parentLink) {
         try {
-            const Categories = this.instance.include('models', 'CategoriesModel')(this.instance)
-            const data = await Categories.getProductCategories(filter, parentLink)
+            console.log('---<<<')
+            const Products = this.instance.include('models', 'ProductsModel')(this.instance)
+            const data = await Products.list(filter, parentLink)
             return data
         } catch (err) {
             throw err
@@ -17,8 +18,8 @@ class CategoriesService {
 
     async getTotal (filter = {}) {
         try {
-            const Categories = this.instance.include('models', 'CategoriesModel')(this.instance)
-            const data = await Categories.getTotal(filter)
+            const Products = this.instance.include('models', 'ProductsModel')(this.instance)
+            const data = await Products.getTotal(filter)
             return data
         } catch (err) {
             throw err
@@ -27,6 +28,6 @@ class CategoriesService {
 }
 
 module.exports = function (injection = {}) {
-    const instance = new CategoriesService(injection)
+    const instance = new ProductsService(injection)
     return instance
 }
