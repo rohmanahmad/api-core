@@ -10,6 +10,8 @@ const models = {
     UKMUsersModel: require('./modules/v1.0/models/components/UKMUsersModel'),
     CategoriesModel: require('./modules/v1.0/models/components/CategoriesModel'),
     ProductsModel: require('./modules/v1.0/models/components/ProductsModel'),
+    ProductImagesModel: require('./modules/v1.0/models/components/ProductImagesModel'),
+    ProductRateSummaryModel: require('./modules/v1.0/models/components/ProductRateSummaryModel'),
     ActivityLogModel: require('./modules/v1.0/models/components/ActivityLogModel')
 }
 
@@ -29,6 +31,10 @@ const services = {
     TaskService: require('./modules/v1.0/services/TaskService'),
 }
 
+const helpers = {
+    ProductHelper: require('./modules/v1.0/helpers/ProductHelper')
+}
+
 const middlewares = {
     Authentication: require('./modules/v1.0/middlewares/AuthenticationMiddleware')
 }
@@ -37,7 +43,7 @@ const configurations = {
     Swagger: require('./modules/v1.0/configurations/Swagger')
 }
 
-const m = {models, controllers, routes, services, middlewares, configurations}
+const m = {models, controllers, routes, services, middlewares, helpers, configurations}
 const use = function (mode, name) {
     /* 
     example:

@@ -1,7 +1,7 @@
 'use strict'
 
 const Models = require('../index')
-const {result} = require('lodash')
+const {result, set} = require('lodash')
 
 class ProductsModel extends Models {
     constructor(instance) {
@@ -24,8 +24,8 @@ class ProductsModel extends Models {
      */
     async list ({product_id, category_id, product_name, product_stock, product_status, sort_by, sort_dir, limit, page, pagination}, parentLink) {
         try {
-            console.log('--->>>>')
             const {tableName: categoryTable} = this.instance.include('models', 'CategoriesModel')(this.instance)
+            const {productStatus} = this.instance.include('helpers', 'ProductHelper')(this.instance)
             const usePagination = pagination === 'yes'
             const currentLimit = parseInt(limit) || 10
             const currentPage = parseInt(page) || 1
@@ -51,10 +51,9 @@ class ProductsModel extends Models {
                 sql, this.values)
             if (!query) query = {}
             if (query && !query.rows) query = {}
-            const productStatuses = ['InActive', 'Active', 'Pending', 'Trash']
             const items = (query.rows || []).map(function (x) {
                 return {
-                    id: x.id,
+                    product_id: x.id,
                     category: {
                         id: x.category_id,
                         name: x.category_name
@@ -64,7 +63,7 @@ class ProductsModel extends Models {
                     product_stock: x.product_stock,
                     product_status: {
                         id: x.product_status,
-                        value: productStatuses[x.product_status]
+                        value: productStatus(x.product_status)
                     },
                     product_description: x.product_description,
                     product_discount: x.product_discount,
@@ -99,8 +98,106 @@ class ProductsModel extends Models {
                     limitPerPage: currentLimit,
                     parentLink
                 })
+            } else {
+                data.pagination = {disabled: true}
             }
             return data
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async getDetail ({product_id}) {
+        try {
+            if (!product_id || (product_id && product_id.length === 0)) throw new Error('Invalid Project ID')
+            const {tableName: CategoriesTable} = this.instance.include('models', 'CategoriesModel')(this.instance)
+            const {tableName: ProductImagesTable} = this.instance.include('models', 'ProductImagesModel')(this.instance)
+            const {tableName: ProductRateSummaryTable} = this.instance.include('models', 'ProductRateSummaryModel')(this.instance)
+            const {productStatus, starsLevel} = this.instance.include('helpers', 'ProductHelper')(this.instance)
+            let sql = [`SELECT 
+                ${this.tableName}.*,
+                ${CategoriesTable}.category_name,
+                ${ProductImagesTable}.image_name,
+                ${ProductImagesTable}.image_url,
+                ${ProductRateSummaryTable}.stars_level
+                    FROM ${this.tableName}`]
+            sql.push(`LEFT JOIN ${CategoriesTable} ON ${CategoriesTable}.id = ${this.tableName}.category_id`)
+            sql.push(`LEFT JOIN ${ProductImagesTable} ON ${ProductImagesTable}.product_id = ${this.tableName}.id`)
+            sql.push(`LEFT JOIN ${ProductRateSummaryTable} ON ${ProductRateSummaryTable}.product_id = ${this.tableName}.id`)
+            sql.push(this.where(`${this.tableName}.id`, product_id))
+            const query = await this.execquery(
+                sql, this.values)
+            const rows = query && query.rows ? query.rows : []
+            const data = {
+                // product_id: 0,
+                // category: {
+                //     id: 0,
+                //     name: ''
+                // },
+                // product_name: '',
+                // product_description: '',
+                // product_status: {
+                //     id: 0,
+                //     name: ''
+                // },
+                // product_stars: {
+                //     id: 4.5,
+                //     name: 'Good Product'
+                // },
+                // product_discount: 0,
+                // product_price: 0,
+                // product_stock: 0,
+                // product_images: [
+                //     {
+                //         index: 1,
+                //         image: "/static/images/product1.jpg",
+                //         title: "this is image 1"
+                //     }
+                // ],
+                // created_at: '',
+                // updated_at: ''
+            }
+            let item = rows.reduce(function (r, x) {
+                if (!r.product_id) set(r, 'product_id', x.id)
+                if (!r.category) {
+                    set(r, 'category.id', x.category_id)
+                    set(r, 'category.name', x.category_name)
+                }
+                if (!r.product_name) set(r, 'product_name', x.product_name)
+                if (!r.product_description) set(r, 'product_description', x.product_description)
+                if (!r.product_status) {
+                    set(r, 'product_status.id', x.product_status)
+                    set(r, 'product_status.name', productStatus(x.product_status))
+                }
+                if (!r.product_discount) set(r, 'product_discount', x.product_discount)
+                if (!r.product_price) set(r, 'product_price', x.product_price) // bermasalah masih, nilai nya 0
+                if (!r.product_stock) set(r, 'product_stock', x.product_stock)
+                if (!r.created_at) set(r, 'created_at', x.created_at)
+                if (!r.updated_at) set(r, 'updated_at', x.updated_at)
+                if (!r.product_images) r.product_images = []
+                if (!r.product_stars) {
+                    r.product_stars = {
+                        value: x.stars_level,
+                        label: starsLevel(x.stars_level)
+                    }
+                }
+                if (x.image_url) {
+                    r.product_images.push({
+                        index: r.product_images.length,
+                        image: x.image_url,
+                        title: x.image_name
+                    })
+                }
+                return r
+            }, data)
+            // getting product favorite by product_id
+            // only available for logged user
+            // code here
+            debugger
+            return {
+                objectItem: item,
+                filters: { product_id }
+            }
         } catch (err) {
             throw err
         }

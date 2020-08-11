@@ -14,8 +14,8 @@ module.exports = function (instance) {
                 const handler = route.handler.split('.')[1]
                 const controller = instance.include('controllers', controllerName)
                 if (!controller) throw new Error(`Ups Kamu Lupa Daftarin controller (${controllerName}.js) di bootstrap.js`)
-                if (typeof controller(handler) !== 'function') throw new Error(`Kamu Lupa Buat Function (${handler}) di controller (${controllerName})`)
-                route['handler'] = controller(handler) // promise
+                if (typeof controller[handler] !== 'function') throw new Error(`Kamu Lupa Buat Function (${handler}) di controller (${controllerName})`)
+                route['handler'] = controller[handler].bind(instance) // promise
                 route['url'] = join(prefix, route['url'])
                 /* swagger purpose */
                 const querySchema = result(route, 'schema.querystring')
@@ -47,9 +47,10 @@ module.exports = function (instance) {
                 if (pHandler) {
                     if (pHandler[0]) {
                         for (const middleIndex in pHandler) {
-                            const MiddleName = instance.include('middlewares', pHandler[middleIndex])
-                            const m = new MiddleName().handle
-                            pHandler[middleIndex] = m
+                            const md = pHandler[middleIndex]
+                            const middleware = instance.include('middlewares', md)
+                            if (!middleware) throw new Error(`Invalid Middleware Named: ${md}`)
+                            pHandler[middleIndex] = middleware.bind(instance)
                         }
                     }
                 }

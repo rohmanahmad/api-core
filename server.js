@@ -29,11 +29,21 @@ const route = require('./modules/v1.0/routes')
 // fastify.register(plugin)
 fastify.decorate('include', use)
 
-// avoid duplicate incloming request with same id
-fastify.addHook('preHandler', function (request, reply, done) {
-  console.log('::::', request.id)
+// monitoring request url
+fastify.addHook('onRequest', (req, reply, done) => {
+  console.info(`[${req.method}]`, req.url)
   done()
 })
+
+
+// registering redis db
+fastify
+  .register(require('fastify-redis'), {
+    host: '127.0.0.1',
+    password: '',
+    port: 6379,
+    namespace: 'redisServer1'
+  })
 
 /* Helmet : https://github.com/fastify/fastify-helmet */
 fastify.register(helmet, {
