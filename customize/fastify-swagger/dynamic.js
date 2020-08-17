@@ -132,18 +132,19 @@ module.exports = function (fastify, opts, next) {
       }
       const routeFullPath = path.join(basePath, route.path)
       if (sch.zone === opts.zoneType) {
-        console.log('[Swagger]', `(${opts.zoneType})`, routeFullPath)
+        // console.log('[Swagger]', `(${opts.zoneT÷ype})`, routeFullPath)
 
         const schema = transform
           ? transform(sch)
           : sch
-        let path = route.url.startsWith(basePath)
+        let fullpath = route.url.startsWith(basePath)
           ? route.url.replace(basePath, '')
           : route.url
-        if (!path.startsWith('/')) {
-          path = '/' + path
+        // let fullpath = path.join(route.url)
+        if (!fullpath.startsWith('/')) {
+          fullpath = '/' + fullpath
         }
-        const url = formatParamUrl(path)
+        const url = formatParamUrl(fullpath)
 
         const swaggerRoute = swaggerObject.paths[url] || {}
 
@@ -226,7 +227,7 @@ module.exports = function (fastify, opts, next) {
         swaggerMethod.responses = genResponse(schema ? schema.response : null)
 
         swaggerObject.paths[url] = swaggerRoute
-      //   debugger
+        // debugger
       }
     }
 

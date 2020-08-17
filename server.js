@@ -81,7 +81,8 @@ fastify.register(require('./customize/fastify-swagger'), use('configurations', '
 
 /* registering routes */
 // register route harus dibawah nya swagger, karena swagger membaca schema yg di dapat dari masing2 routes yg didaftarkan
-fastify.register(route(fastify))
+fastify.register(route(fastify, 'SwaggerForClient'))
+fastify.register(route(fastify, 'SwaggerForPartners'))
 
 /* set notfound response handler */
 fastify.setNotFoundHandler({}, function (request, response) {

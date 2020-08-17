@@ -113,7 +113,7 @@ const routes = [
         url: '/detail',
         // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
-            zone: 'client',
+            zone: 'partners',
             tags: ['Products'],
             summary: 'Product Detail',
             description: 'Detail Information For Product',
