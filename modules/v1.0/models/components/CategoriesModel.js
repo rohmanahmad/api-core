@@ -17,6 +17,29 @@ class CategoriesModel extends Models {
         return 'pg'
     }
 
+    get schema () {
+        return {
+            id: Number,
+            parent_id: Number, // yaitu parentid masih dari tabel yg sama
+            category_name: String,
+            category_description: String,
+            created_at: Date,
+            updated_at: Date
+        }
+    }
+
+    get index () {
+        return {
+            primary: {
+                keys: {id: -1},
+                uniq: true
+            },
+            date: { // untuk sorting kebanyakan DESC
+                keys: {created_at: -1}
+            }
+        }
+    }
+
     /* functions */
 
     async getProductCategories ({category_id, category_name, limit, page, pagination}, parentLink) {

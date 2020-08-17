@@ -17,6 +17,42 @@ class ProductsModel extends Models {
         return 'pg'
     }
 
+    get schema () {
+        return {
+            id: Number,
+            category_id: Number, // foreign-key dari category_list
+            product_name: String,
+            product_description: String,
+            product_price: Number,
+            product_status: Number,
+            product_discount: Number,
+            product_stock: Number,
+            created_at: Date,
+            updated_at: Date
+        }
+    }
+
+    get index () {
+        return {
+            primary: {
+                keys: {id: -1},
+                uniq: true
+            },
+            category: { // digunakan untuk pencarian by category
+                keys: {category_id: 1},
+                uniq: false
+            },
+            productname: { // digunakan untuk pencarian by keyword
+                keys: {product_name: 1},
+                uniq: false
+            },
+            date: { // untuk sorting kebanyakan DESC
+                keys: {created_at: -1},
+                uniq: false
+            }
+        }
+    }
+
     /* functions */
     /* 
     - sort_by: [name, price]
@@ -117,6 +153,7 @@ class ProductsModel extends Models {
             let sql = [`SELECT 
                 ${this.tableName}.*,
                 ${CategoriesTable}.category_name,
+                ${ProductImagesTable}.image_index,
                 ${ProductImagesTable}.image_name,
                 ${ProductImagesTable}.image_url,
                 ${ProductRateSummaryTable}.stars_level
@@ -167,7 +204,7 @@ class ProductsModel extends Models {
                 if (!r.product_description) set(r, 'product_description', x.product_description)
                 if (!r.product_status) {
                     set(r, 'product_status.id', x.product_status)
-                    set(r, 'product_status.name', productStatus(x.product_status))
+                    set(r, 'product_status.value', productStatus(x.product_status))
                 }
                 if (!r.product_discount) set(r, 'product_discount', x.product_discount)
                 if (!r.product_price) set(r, 'product_price', x.product_price) // bermasalah masih, nilai nya 0
@@ -183,7 +220,7 @@ class ProductsModel extends Models {
                 }
                 if (x.image_url) {
                     r.product_images.push({
-                        index: r.product_images.length,
+                        index: x.image_index,
                         image: x.image_url,
                         title: x.image_name
                     })

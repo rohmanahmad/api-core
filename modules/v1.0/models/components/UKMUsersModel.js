@@ -17,6 +17,46 @@ class UKMUsersModel extends Models {
         return 'pg'
     }
 
+    get schema () {
+        return {
+            id: Number,
+            category_id: Number, // foreign-key dari category_list
+            product_name: String,
+            product_description: String,
+            product_price: Number,
+            product_status: Number,
+            product_discount: Number,
+            product_stock: Number,
+            created_at: Date,
+            updated_at: Date
+        }
+    }
+
+    get index () {
+        return {
+            primary: {
+                keys: {id: -1},
+                uniq: true
+            },
+            category: { // digunakan untuk pencarian by category
+                keys: {category_id: 1},
+                uniq: false
+            },
+            productname: { // digunakan untuk pencarian by keyword
+                keys: {product_name: 1},
+                uniq: false
+            },
+            stock: { // digunakan untuk pencarian by keyword
+                keys: {stock: 1},
+                uniq: false
+            },
+            date: { // untuk sorting kebanyakan DESC
+                keys: {created_at: -1},
+                uniq: false
+            }
+        }
+    }
+
     /* functions */
 
     get messages () {

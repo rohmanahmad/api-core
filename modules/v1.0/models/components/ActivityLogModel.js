@@ -16,6 +16,33 @@ class UsersModel extends Models {
         return 'pg'
     }
 
+    get schema () {
+        return {
+            id: Number,
+            server_ip: String,
+            data: Object,
+            created_at: Date,
+            updated_at: Date,
+            type: String
+        }
+    }
+
+    get index () {
+        return {
+            primary: {
+                keys: {id: -1},
+                uniq: true
+            },
+            server: { // mencari dengan spesifik server dan jenis
+                keys: {server_ip: -1, type: -1},
+                uniq: false
+            },
+            date: { // untuk sorting kebanyakan DESC
+                keys: {created_at: -1}
+            }
+        }
+    }
+
     /* functions */
 
     async createRestartActivity () {

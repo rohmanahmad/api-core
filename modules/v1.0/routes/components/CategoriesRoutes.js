@@ -1,10 +1,11 @@
-const prefix = '/v1/product/categories'
+const prefix = '/product/categories'
 const routes = [
     {
         method: 'GET',
         url: '/',
         // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
+            zone: 'client',
             tags: ['Products'],
             summary: 'All Categories',
             description: 'category list',
@@ -73,6 +74,7 @@ const routes = [
         url: '/total',
         // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
+            zone: 'client',
             tags: ['Products'],
             summary: 'Total Of All Categories',
             description: 'category total',

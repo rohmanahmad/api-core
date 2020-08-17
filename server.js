@@ -76,7 +76,8 @@ fastify.register(require('fastify-postgres'), function () {
 })
 
 /* documentation : https://github.com/fastify/fastify-swagger*/
-fastify.register(require('fastify-swagger'), use('configurations', 'Swagger'))
+fastify.register(require('./customize/fastify-swagger'), use('configurations', 'SwaggerForClient'))
+fastify.register(require('./customize/fastify-swagger'), use('configurations', 'SwaggerForPartners')) // using custom 
 
 /* registering routes */
 // register route harus dibawah nya swagger, karena swagger membaca schema yg di dapat dari masing2 routes yg didaftarkan
@@ -108,11 +109,13 @@ console.logger = function (...args) {
 }
 /* trying to open port */
 fastify.ready(function (err) {
+  try {
     if (err) {
         console.error(err)
         process.exit(0)
     }
-    fastify.swagger()
+    fastify.swaggerforclient({zoneType: 'client'})
+    fastify.swaggerforpartners({zoneType: 'partners'})
     fastify.listen(process.env.APP_PORT)
       .then(async (address) => {
         const ActivityService = fastify.include('services', 'TaskService')(fastify)
@@ -126,4 +129,7 @@ fastify.ready(function (err) {
           console.error(err)
           process.exit(0)
       })
+  } catch (err2) {
+    console.error(err2)
+  }
 })

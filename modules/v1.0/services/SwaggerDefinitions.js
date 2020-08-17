@@ -5,6 +5,7 @@ const definitions = {
         // C
         category_id: {type: 'string'},
         category_name: {type: 'string'},
+        customer_id: {type: 'number'},
         // F
         fullname: {type: 'string'},
         // L
@@ -24,6 +25,8 @@ const definitions = {
         sort_by: {type: 'string'},
         sort_dir: {type: 'string'},
         state: {type: 'string'},
+        // U
+        ukm_id: {type: 'number'}
     },
     body: {
         username: {type: 'string'},

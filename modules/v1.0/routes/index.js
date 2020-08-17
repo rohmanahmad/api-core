@@ -17,30 +17,49 @@ module.exports = function (instance) {
                 if (typeof controller[handler] !== 'function') throw new Error(`Kamu Lupa Buat Function (${handler}) di controller (${controllerName})`)
                 route['handler'] = controller[handler].bind(instance) // promise
                 route['url'] = join(prefix, route['url'])
+                const requiredFields = route['schema']['required'] || []
                 /* swagger purpose */
                 const querySchema = result(route, 'schema.querystring')
                 const paramSchema = result(route, 'schema.params')
                 const bodySchema = result(route, 'schema.body')
                 if (querySchema) {
+                    let queryObject = {
+                        type: 'object',
+                        properties: {}
+                    }
                     if (!isArray(querySchema)) throw new Error(`(${routerFile}) [${route['url']}] QueryString Harus Berupa Array!`)
-                    const queryTransformation = querySchema.reduce((r, x) => {
+                    queryObject['properties'] = querySchema.reduce((r, x) => {
                         return {...r, ...definition(`querystring.${x}`)}
                     }, {})
-                    set(route, 'schema.querystring', queryTransformation)
+                    const required = querySchema.filter(x => requiredFields.indexOf(x) > -1)
+                    if (required.length > 0) queryObject['required'] = required
+                    set(route, 'schema.querystring', queryObject)
                 }
                 if (paramSchema) {
+                    let paramObject = {
+                        type: 'object',
+                        properties: {}
+                    }
                     if (!isArray(paramSchema)) throw new Error(`(${routerFile}) [${route['url']}] Parameters Harus Berupa Array!`)
-                    const paramTransformation = paramSchema.reduce((r, x) => {
+                    paramObject['properties'] = paramSchema.reduce((r, x) => {
                         return {...r, ...definition(`params.${x}`)}
                     }, {})
-                    set(route, 'schema.params', paramTransformation)
+                    const required = paramSchema.filter(x => requiredFields.indexOf(x) > -1)
+                    if (required.length > 0) paramObject['required'] = required
+                    set(route, 'schema.params', paramObject)
                 }
                 if (bodySchema) {
+                    let bodyObject = {
+                        type: 'object',
+                        properties: {}
+                    }
                     if (!isArray(bodySchema)) throw new Error(`(${routerFile}) [${route['url']}] Body Harus Berupa Array!`)
-                    const bodyTransformation = bodySchema.reduce((r, x) => {
+                    bodyObject['properties'] = bodySchema.reduce((r, x) => {
                         return {...r, ...definition(`body.${x}`)}
                     }, {})
-                    set(route, 'schema.body', bodyTransformation)
+                    const required = bodySchema.filter(x => requiredFields.indexOf(x) > -1)
+                    if (required.length > 0) bodyObject['required'] = required
+                    set(route, 'schema.body', bodyObject)
                 }
                 /* http middleware */
                 const pHandler = route['preHandler']

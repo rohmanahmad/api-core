@@ -3,6 +3,7 @@ const controllers = {
     CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
     UserController: require('./modules/v1.0/controllers/UserController'),
     ProductsController: require('./modules/v1.0/controllers/ProductsController'),
+    ReviewsController: require('./modules/v1.0/controllers/ReviewsController'),
     HomeController: require('./modules/v1.0/controllers/HomeController')
 }
 
@@ -12,6 +13,7 @@ const models = {
     ProductsModel: require('./modules/v1.0/models/components/ProductsModel'),
     ProductImagesModel: require('./modules/v1.0/models/components/ProductImagesModel'),
     ProductRateSummaryModel: require('./modules/v1.0/models/components/ProductRateSummaryModel'),
+    ReviewsModel: require('./modules/v1.0/models/components/ReviewsModel'),
     ActivityLogModel: require('./modules/v1.0/models/components/ActivityLogModel')
 }
 
@@ -20,6 +22,7 @@ const routes = {
     UserRoutes: require('./modules/v1.0/routes/components/UserRoutes'),
     CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
     ProductsRoutes: require('./modules/v1.0/routes/components/ProductsRoutes'),
+    ReviewsRoutes: require('./modules/v1.0/routes/components/ReviewsRoutes'),
     HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes')
 }
 
@@ -28,6 +31,7 @@ const services = {
     CategoriesService: require('./modules/v1.0/services/CategoriesService'),
     SwaggerDefinitions: require('./modules/v1.0/services/SwaggerDefinitions'),
     ProductsService: require('./modules/v1.0/services/ProductsService'),
+    ReviewsService: require('./modules/v1.0/services/ReviewsService'),
     TaskService: require('./modules/v1.0/services/TaskService'),
 }
 
@@ -40,7 +44,8 @@ const middlewares = {
 }
 
 const configurations = {
-    Swagger: require('./modules/v1.0/configurations/Swagger')
+    SwaggerForClient: require('./modules/v1.0/configurations/swagger/Client'),
+    SwaggerForPartners: require('./modules/v1.0/configurations/swagger/Partners')
 }
 
 const m = {models, controllers, routes, services, middlewares, helpers, configurations}
