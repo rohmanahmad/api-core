@@ -31,6 +31,7 @@ const definitions = {
     body: {
         username: {type: 'string'},
         password: {type: 'string'},
+        body: {type: 'string'}
     },
     headers: {
         version: {type: 'string', default: '1.0.0'}

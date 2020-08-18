@@ -1,10 +1,14 @@
+const {readFileSync} = require('fs')
+const path = require('path')
+
 const controllers = {
     AuthenticationController: require('./modules/v1.0/controllers/AuthenticationController'),
     CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
     UserController: require('./modules/v1.0/controllers/UserController'),
     ProductsController: require('./modules/v1.0/controllers/ProductsController'),
     ReviewsController: require('./modules/v1.0/controllers/ReviewsController'),
-    HomeController: require('./modules/v1.0/controllers/HomeController')
+    HomeController: require('./modules/v1.0/controllers/HomeController'),
+    WebviewController: require('./modules/v1.0/controllers/WebviewController')
 }
 
 const models = {
@@ -23,7 +27,8 @@ const routes = {
     CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
     ProductsRoutes: require('./modules/v1.0/routes/components/ProductsRoutes'),
     ReviewsRoutes: require('./modules/v1.0/routes/components/ReviewsRoutes'),
-    HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes')
+    HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes'),
+    WebviewRoutes: require('./modules/v1.0/routes/components/WebviewRoutes')
 }
 
 const services = {
@@ -48,7 +53,13 @@ const configurations = {
     SwaggerForPartners: require('./modules/v1.0/configurations/swagger/Partners')
 }
 
-const m = {models, controllers, routes, services, middlewares, helpers, configurations}
+const statics = {
+    GoogleLogin: readFileSync(path.join(__dirname, 'modules/v1.0/statics/GoogleLogin.html'), {encoding: 'utf-8'})
+}
+
+const environments = process.env
+
+const m = {models, controllers, routes, services, middlewares, helpers, configurations, statics, environments}
 const use = function (mode, name) {
     /* 
     example:

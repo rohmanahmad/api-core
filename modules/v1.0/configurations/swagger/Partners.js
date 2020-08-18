@@ -22,7 +22,7 @@ module.exports = {
       produces: ['application/json'],
       tags: [
         { name: 'Authentication', description: 'All About Authentication Routes' },
-        { name: 'UKM', description: 'All About UKM Routes' },
+        { name: 'Partners', description: 'All About Partners Routes' },
         { name: 'Customers', description: 'All About Customers Routes' },
         { name: 'Products', description: 'All About Products Routes' },
         { name: 'Reviews', description: 'All About Reviews Routes' },

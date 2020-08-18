@@ -1,0 +1,42 @@
+<html lang="en">
+  <head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="{{YOUR_CLIENT_ID}}">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <script>
+      function onSignIn(googleUser) {
+          console.log(googleUser)
+          debugger
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        var formdata = '';
+        // formdata += `google_id=${profile.getId()}`;
+        formdata += `full_name=${profile.getName()}`;
+        formdata += `,given_name=${profile.getGivenName()}`;
+        formdata += `,family_name=${profile.getFamilyName()}`;
+        formdata += `,avatar=${profile.getImageUrl()}`;
+        formdata += `,email=${profile.getEmail()}`;
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        formdata += `,token=${id_token}`;
+        const url = '/api/v1/callbacks/{{HANDLER_URL}}';
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+
+        //Send the proper header information along with the request
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() { // Call a function when the state changes.
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                // Request finished. Do processing here.
+            }
+        }
+        xhr.send(formdata);
+      }
+    </script>
+  </body>
+</html>

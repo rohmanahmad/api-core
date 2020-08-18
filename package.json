@@ -18,7 +18,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "nodemon --watch modules --watch customize --watch .env --watch server.js -x node --inspect server.js",
+    "dev": "nodemon --watch modules --watch *.js --watch customize --watch .env --watch server.js -x node --inspect server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
