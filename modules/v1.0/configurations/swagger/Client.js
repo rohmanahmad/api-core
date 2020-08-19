@@ -31,7 +31,8 @@ module.exports = {
         { name: 'Transactions', description: 'All About Transaction Routes' },
         { name: 'Shipping', description: 'All About Shipping Routes' },
         { name: 'Configurations', description: 'All About Configuration Routes' },
-        { name: 'Conversations', description: 'All About Conversation Routes' }
+        { name: 'Conversations', description: 'All About Conversation Routes' },
+        { name: 'Callbacks API', description: 'All About CallBack for API Routes' }
       ],
       definitions: {},
       securityDefinitions: {

@@ -131,7 +131,9 @@ module.exports = function (fastify, opts, next) {
         continue
       }
       const routeFullPath = path.join(basePath, route.path)
-      if (sch.zone === opts.zoneType) {
+      const zones = typeof sch.zone === 'string' ? [sch.zone] : sch.zone
+      // debugger
+      if (zones.indexOf(opts.zoneType) > -1) {
         // console.log('[Swagger]', `(${opts.zoneT÷ype})`, routeFullPath)
 
         const schema = transform

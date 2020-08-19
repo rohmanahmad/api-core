@@ -65,6 +65,7 @@ const use = function (mode, name) {
     example:
         -   fastify.use('models', 'UserModel')
     */
+    
    try {
        const x = m[mode]
        if (!x) throw new Error(`Ops, Kamu Lupa daftarin ${mode} di file ./bootstrap.js`)

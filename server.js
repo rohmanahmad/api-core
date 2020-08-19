@@ -23,6 +23,10 @@ const fastify = require('fastify')({
     ignoreTrailingSlash: true, // registers both "/foo" and "/foo/" :: tanpa / dibelakang atau tidak, sama saja
     caseSensitive: true // https://www.fastify.io/docs/latest/Server/#casesensitive
 })
+
+// register form parser (application/x-www-form-urlencoded)
+fastify.register(require('fastify-formbody'))
+
 const {plugin, use} = require('./bootstrap') // {use: function}
 const route = require('./modules/v1.0/routes')
 
