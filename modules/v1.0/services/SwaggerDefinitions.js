@@ -8,6 +8,10 @@ const definitions = {
         customer_id: {type: 'number'},
         // F
         fullname: {type: 'string'},
+        // H
+        handler_url: {type: 'string'},
+        // I
+        is_component: {type: 'string', enum: ['yes', 'no']},
         // L
         limit: {type: 'number'},
         // N
@@ -31,7 +35,12 @@ const definitions = {
     body: {
         username: {type: 'string'},
         password: {type: 'string'},
-        body: {type: 'string'}
+        full_name: {type: 'string'},
+        given_name: {type: 'string'},
+        family_name: {type: 'string'},
+        avatar: {type: 'string'},
+        email: {type: 'string'},
+        token: {type: 'string'}
     },
     headers: {
         version: {type: 'string', default: '1.0.0'}

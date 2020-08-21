@@ -21,13 +21,10 @@ function getRedirectPathForTheRootRoute (url) {
 
 function fastifySwagger (fastify, opts, next) {
   let swaggerInstance = null
-  if (opts.prefix.indexOf('client') > -1) {
+  if (opts.prefix.indexOf('/client/') > -1) {
     swaggerInstance = fastify['swaggerforclient']
-  } else if (opts.prefix.indexOf('partners') > -1) {
+  } else if (opts.prefix.indexOf('/partners/') > -1) {
     swaggerInstance = fastify['swaggerforpartners']
-  } else {
-    console.error('Invalid Zone Of Swagger')
-    process.exit(0)
   }
   fastify.route({
     url: '/',

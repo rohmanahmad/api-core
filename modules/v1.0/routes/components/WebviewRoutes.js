@@ -14,7 +14,10 @@ const routes = [
                   "apiKey": []
                 }
             ],
-            querystring: [],
+            querystring: [
+                "is_component",
+                "handler_url"
+            ],
             // body: [],
             response: {
             }

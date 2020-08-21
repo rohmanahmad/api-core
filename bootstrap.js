@@ -4,6 +4,7 @@ const path = require('path')
 const controllers = {
     AuthenticationController: require('./modules/v1.0/controllers/AuthenticationController'),
     CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
+    CallbacksController: require('./modules/v1.0/controllers/CallbacksController'),
     UserController: require('./modules/v1.0/controllers/UserController'),
     ProductsController: require('./modules/v1.0/controllers/ProductsController'),
     ReviewsController: require('./modules/v1.0/controllers/ReviewsController'),
@@ -25,6 +26,7 @@ const routes = {
     AuthenticationRoutes: require('./modules/v1.0/routes/components/AuthenticationRoutes'),
     UserRoutes: require('./modules/v1.0/routes/components/UserRoutes'),
     CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
+    CallbacksRoutes: require('./modules/v1.0/routes/components/CallbacksRoutes'),
     ProductsRoutes: require('./modules/v1.0/routes/components/ProductsRoutes'),
     ReviewsRoutes: require('./modules/v1.0/routes/components/ReviewsRoutes'),
     HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes'),

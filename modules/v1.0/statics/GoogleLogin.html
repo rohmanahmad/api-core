@@ -8,22 +8,20 @@
     <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     <script>
       function onSignIn(googleUser) {
-          console.log(googleUser)
-          debugger
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         var formdata = '';
         // formdata += `google_id=${profile.getId()}`;
         formdata += `full_name=${profile.getName()}`;
-        formdata += `,given_name=${profile.getGivenName()}`;
-        formdata += `,family_name=${profile.getFamilyName()}`;
-        formdata += `,avatar=${profile.getImageUrl()}`;
-        formdata += `,email=${profile.getEmail()}`;
+        formdata += `&given_name=${profile.getGivenName()}`;
+        formdata += `&family_name=${profile.getFamilyName()}`;
+        formdata += `&avatar=${profile.getImageUrl()}`;
+        formdata += `&email=${profile.getEmail()}`;
 
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
-        formdata += `,token=${id_token}`;
-        const url = '/api/v1/callbacks/{{HANDLER_URL}}';
+        formdata += `&token=${id_token}`;
+        const url = '{{HANDLER_URL}}';
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
 

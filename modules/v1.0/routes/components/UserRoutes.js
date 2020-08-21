@@ -5,6 +5,7 @@ const routes = [
         url: '/',
         // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
+            zone: ['client', 'partners'],
             tags: ['User Account'],
             summary: 'User Information',
             description: 'getting information about specific user',

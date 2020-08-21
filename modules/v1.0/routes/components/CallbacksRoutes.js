@@ -1,11 +1,11 @@
-const prefix = '/callbacks'
+const prefix = '/'
 const routes = [
     {
         method: 'POST',
-        url: '/google/signin',
+        url: '/callbacks/google/signin',
         // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
-            zone: ['client', 'partners'],
+            zone: 'client',
             tags: ['Callbacks API'],
             summary: 'Callback For Google Auth',
             description: 'category list',
@@ -14,12 +14,70 @@ const routes = [
                   "apiKey": []
                 }
             ],
-            querystring: [
-                'category_id',
-                'category_name',
-                'limit',
-                'page',
-                'pagination'
+            body: [
+                "full_name",
+                "given_name",
+                "family_name",
+                "avatar",
+                "email",
+                "token",
+            ],
+            response: {
+                // 200: {
+                //     type: 'object',
+                //     properties: {
+                //         statusCode: { type: 'number', example: '200' },
+                //         message: { type: 'string' },
+                //         data: {
+                //             type: 'object',
+                //             properties: {
+                //                 token: {type: 'string', example: 'md5hash'},
+                //                 user: {
+                //                     type: 'object',
+                //                     example: {
+                //                         id: 1,
+                //                         name: 'blabla',
+                //                         email: 'blabla@bla.com',
+                //                         partner_data: {
+                //                             status: true,
+                //                             data: {
+                //                                 ukm_id: 3,
+                //                                 ukm_name: 'Serba Ada',
+                //                             }
+                //                         }
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+            }
+        },
+        preHandler: [
+        ],
+        handler: 'CallbacksController.googleSignin'
+    },
+    {
+        method: 'POST',
+        url: '/callbacks/google/signin',
+        // version: '1.0.0', // untuk header. disable dlu. ruwet
+        schema: {
+            zone: 'partners',
+            tags: ['Callbacks API'],
+            summary: 'Callback For Google Auth',
+            description: 'category list',
+            security: [
+                {
+                  "apiKey": []
+                }
+            ],
+            body: [
+                "full_name",
+                "given_name",
+                "family_name",
+                "avatar",
+                "email",
+                "token",
             ],
             response: {
                 200: {
@@ -30,32 +88,19 @@ const routes = [
                         data: {
                             type: 'object',
                             properties: {
-                                metadata: {
+                                token: {type: 'string', example: 'md5hash'},
+                                user: {
                                     type: 'object',
-                                    properties: {
-                                        count: { type: 'number', example: 2 },
-                                        limit: { type: 'number', example: 10 },
-                                        page: { type: 'number', example: 1 }
-                                    }
-                                },
-                                pagination: {
-                                    type: 'object',
-                                    properties: {
-                                        current: {type: 'number'},
-                                        items: {type: 'array', example: [{label: '1', link: '/link'}]},
-                                        limitPerPage: {type: 'number', example: 10}
-                                    }
-                                },
-                                dataitems: {
-                                    type: 'array',
-                                    items: {
-                                        type: "object",
-                                        properties: {
-                                            id: { type: 'number', example: 1 },
-                                            category_name: { type: 'string', example: 'Makanan' },
-                                            category_status: { type: 'string', example: 'active' },
-                                            created_at: { type: 'string', example: '2020-01-01 20:02:02' },
-                                            updated_at: { type: 'string', example: '2020-01-01 20:02:02' }
+                                    example: {
+                                        id: 1,
+                                        name: 'blabla',
+                                        email: 'blabla@bla.com',
+                                        partner_data: {
+                                            status: true,
+                                            data: {
+                                                ukm_id: 3,
+                                                ukm_name: 'Serba Ada',
+                                            }
                                         }
                                     }
                                 }
@@ -67,7 +112,7 @@ const routes = [
         },
         preHandler: [
         ],
-        handler: 'CallbacksController.googleForClient'
+        handler: 'CallbacksController.googleSignin'
     }
 ]
 
