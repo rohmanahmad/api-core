@@ -5,45 +5,59 @@ const controllers = {
     AuthenticationController: require('./modules/v1.0/controllers/AuthenticationController'),
     CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
     CallbacksController: require('./modules/v1.0/controllers/CallbacksController'),
-    UserController: require('./modules/v1.0/controllers/UserController'),
+    HomeController: require('./modules/v1.0/controllers/HomeController'),
     ProductsController: require('./modules/v1.0/controllers/ProductsController'),
     ReviewsController: require('./modules/v1.0/controllers/ReviewsController'),
-    HomeController: require('./modules/v1.0/controllers/HomeController'),
+    UserController: require('./modules/v1.0/controllers/UserController'),
     WebviewController: require('./modules/v1.0/controllers/WebviewController')
 }
 
 const models = {
-    UKMUsersModel: require('./modules/v1.0/models/components/UKMUsersModel'),
+    ActivityLogModel: require('./modules/v1.0/models/components/ActivityLogModel'),
+    AddressListModel: require('./modules/v1.0/models/components/AddressListModel'),
+    AvailableShipping: require('./modules/v1.0/models/components/AvailableShipping'),
     CategoriesModel: require('./modules/v1.0/models/components/CategoriesModel'),
+    ConversationListModel: require('./modules/v1.0/models/components/ConversationListModel'),
     ProductsModel: require('./modules/v1.0/models/components/ProductsModel'),
     ProductImagesModel: require('./modules/v1.0/models/components/ProductImagesModel'),
     ProductRateSummaryModel: require('./modules/v1.0/models/components/ProductRateSummaryModel'),
+    ProductReviewModel: require('./modules/v1.0/models/components/ProductReviewModel'),
+    ProductReviewRepliesModel: require('./modules/v1.0/models/components/ProductReviewRepliesModel'),
     ReviewsModel: require('./modules/v1.0/models/components/ReviewsModel'),
-    ActivityLogModel: require('./modules/v1.0/models/components/ActivityLogModel')
+    ShippingListModel: require('./modules/v1.0/models/components/ShippingListModel'),
+    UserAccountsModel: require('./modules/v1.0/models/components/UserAccountsModel'),
+    
+    TransactionDetailModel: require('./modules/v1.0/models/components/TransactionDetailModel'),
+    TransactionListModel: require('./modules/v1.0/models/components/TransactionListModel'),
+    UKMConfiguration: require('./modules/v1.0/models/components/UKMConfiguration'),
+    UKMList: require('./modules/v1.0/models/components/UKMList'),
 }
 
 const routes = {
     AuthenticationRoutes: require('./modules/v1.0/routes/components/AuthenticationRoutes'),
-    UserRoutes: require('./modules/v1.0/routes/components/UserRoutes'),
     CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
     CallbacksRoutes: require('./modules/v1.0/routes/components/CallbacksRoutes'),
+    HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes'),
     ProductsRoutes: require('./modules/v1.0/routes/components/ProductsRoutes'),
     ReviewsRoutes: require('./modules/v1.0/routes/components/ReviewsRoutes'),
-    HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes'),
-    WebviewRoutes: require('./modules/v1.0/routes/components/WebviewRoutes')
+    WebviewRoutes: require('./modules/v1.0/routes/components/WebviewRoutes'),
+    UserAccountsRoutes: require('./modules/v1.0/routes/components/UserAccountsRoutes'),
 }
 
 const services = {
     AuthenticationService: require('./modules/v1.0/services/AuthenticationService'),
     CategoriesService: require('./modules/v1.0/services/CategoriesService'),
-    SwaggerDefinitions: require('./modules/v1.0/services/SwaggerDefinitions'),
     ProductsService: require('./modules/v1.0/services/ProductsService'),
     ReviewsService: require('./modules/v1.0/services/ReviewsService'),
+    SwaggerDefinitions: require('./modules/v1.0/services/SwaggerDefinitions'),
     TaskService: require('./modules/v1.0/services/TaskService'),
+    UserAccountsService: require('./modules/v1.0/services/UserAccountsService'),
+    UserTokensService: require('./modules/v1.0/services/UserTokensService'),
 }
 
 const helpers = {
-    ProductHelper: require('./modules/v1.0/helpers/ProductHelper')
+    ProductHelper: require('./modules/v1.0/helpers/ProductHelper'),
+    GoogleAuthHelper: require('./modules/v1.0/helpers/GoogleAuthHelper')
 }
 
 const middlewares = {

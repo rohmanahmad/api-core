@@ -36,8 +36,8 @@ const routes = [
                 //                     type: 'object',
                 //                     example: {
                 //                         id: 1,
-                //                         name: 'blabla',
                 //                         email: 'blabla@bla.com',
+                //                         fullname: 'Rohman Ahmad',
                 //                         partner_data: {
                 //                             status: true,
                 //                             data: {

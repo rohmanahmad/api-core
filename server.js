@@ -93,7 +93,8 @@ fastify.setNotFoundHandler({}, function (request, response) {
   response.send({
     message: `(${request.url}) Route not found`,
     error: 'You need add custom headers like accept-version and another header',
-    statusCode: 404
+    statusCode: 404,
+    // errors: err // gak ada
   })
 })
 
@@ -105,7 +106,8 @@ fastify.setErrorHandler(function (err, request, response) {
     .send({
       statusCode: 500,
       message: err.message,
-      processId: request.id
+      processId: request.id,
+      errors: err.stack.toString()
     })
 })
 
