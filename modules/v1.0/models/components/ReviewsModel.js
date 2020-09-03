@@ -10,7 +10,7 @@ class ProductsModel extends Models {
     }
 
     get tableName () {
-        return 'product_review'
+        return 'reviews'
     }
 
     get connection () {

@@ -3,14 +3,14 @@
 const Models = require('../index')
 const {result} = require('lodash')
 
-class ShippingListModel extends Models {
+class ProductReviewRepliesModel extends Models {
     constructor(instance) {
         super()
         this.instance = instance
     }
 
     get tableName () {
-        return 'shipping_list'
+        return 'review_replies'
     }
 
     get connection () {
@@ -20,9 +20,11 @@ class ShippingListModel extends Models {
     get schema () {
         return {
             id: Number,
-            shipping_name: String,
-            shipping_company_id: Number,
-            is_active: Boolean,
+            review_id: Number, // relasi ke product_review.id
+            customer_id: Number, // relasi ke customer.id
+            ukm_id: Number, // relasi ke ukm.id
+            reply_text: String,
+            reply_images: String,
             created_at: Date,
             updated_at: Date
         }
@@ -34,8 +36,8 @@ class ShippingListModel extends Models {
                 keys: {id: -1},
                 uniq: true
             },
-            search_autocomplete: { // search shipping
-                keys: {shipping_name: 1},
+            review_id: { // sort chat by date
+                keys: {review_id: -1},
                 uniq: false
             },
             date: { // untuk sorting
@@ -67,6 +69,6 @@ class ShippingListModel extends Models {
 }
 
 module.exports = function (instance = {}) {
-    const model = new ShippingListModel(instance)
+    const model = new ProductReviewRepliesModel(instance)
     return model
 }

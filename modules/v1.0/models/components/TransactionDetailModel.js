@@ -3,14 +3,14 @@
 const Models = require('../index')
 const {result} = require('lodash')
 
-class ShippingListModel extends Models {
+class TransactionDetailModel extends Models {
     constructor(instance) {
         super()
         this.instance = instance
     }
 
     get tableName () {
-        return 'product_review_replies'
+        return 'transaction_detail'
     }
 
     get connection () {
@@ -70,6 +70,6 @@ class ShippingListModel extends Models {
 }
 
 module.exports = function (instance = {}) {
-    const model = new ShippingListModel(instance)
+    const model = new TransactionDetailModel(instance)
     return model
 }

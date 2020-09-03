@@ -15,22 +15,21 @@ const controllers = {
 const models = {
     ActivityLogModel: require('./modules/v1.0/models/components/ActivityLogModel'),
     AddressListModel: require('./modules/v1.0/models/components/AddressListModel'),
-    AvailableShipping: require('./modules/v1.0/models/components/AvailableShipping'),
+    AvailableShipping: require('./modules/v1.0/models/components/AvailableShippingModel'),
     CategoriesModel: require('./modules/v1.0/models/components/CategoriesModel'),
     ConversationListModel: require('./modules/v1.0/models/components/ConversationListModel'),
     ProductsModel: require('./modules/v1.0/models/components/ProductsModel'),
     ProductImagesModel: require('./modules/v1.0/models/components/ProductImagesModel'),
-    ProductRateSummaryModel: require('./modules/v1.0/models/components/ProductRateSummaryModel'),
-    ProductReviewModel: require('./modules/v1.0/models/components/ProductReviewModel'),
-    ProductReviewRepliesModel: require('./modules/v1.0/models/components/ProductReviewRepliesModel'),
     ReviewsModel: require('./modules/v1.0/models/components/ReviewsModel'),
+    ReviewRepliesModel: require('./modules/v1.0/models/components/ReviewRepliesModel'),
+    RateSummaryModel: require('./modules/v1.0/models/components/RateSummaryModel'),
     ShippingListModel: require('./modules/v1.0/models/components/ShippingListModel'),
     UserAccountsModel: require('./modules/v1.0/models/components/UserAccountsModel'),
     
     TransactionDetailModel: require('./modules/v1.0/models/components/TransactionDetailModel'),
     TransactionListModel: require('./modules/v1.0/models/components/TransactionListModel'),
-    UKMConfiguration: require('./modules/v1.0/models/components/UKMConfiguration'),
-    UKMList: require('./modules/v1.0/models/components/UKMList'),
+    UKMConfigurationModel: require('./modules/v1.0/models/components/UKMConfigurationModel'),
+    UKMListModel: require('./modules/v1.0/models/components/UKMListModel'),
 }
 
 const routes = {

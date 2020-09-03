@@ -13,7 +13,7 @@ class ProductRateSummary extends Models {
     }
 
     get tableName () {
-        return 'product_rate_summary'
+        return 'rate_summary'
     }
 
     get connection () {
@@ -23,6 +23,7 @@ class ProductRateSummary extends Models {
     get schema () {
         return {
             id: Number,
+            rate_type: String, // product, store or other
             product_id: Number, // foreign-key dari product_list
             stars_level: Number, // (type float8)
             created_at: Date,

@@ -3,14 +3,14 @@
 const Models = require('../index')
 const {result} = require('lodash')
 
-class ShippingListModel extends Models {
+class UKMConfigurationModel extends Models {
     constructor(instance) {
         super()
         this.instance = instance
     }
 
     get tableName () {
-        return 'shipping_list'
+        return 'ukm_configuration'
     }
 
     get connection () {
@@ -20,9 +20,12 @@ class ShippingListModel extends Models {
     get schema () {
         return {
             id: Number,
-            shipping_name: String,
-            shipping_company_id: Number,
-            is_active: Boolean,
+            transaction_id: Number, // relasi ke transactions.id
+            trx_product_id: Number, // relase ke product_list.id
+            trx_locked_name: String,
+            trx_locked_price: Number,
+            trx_locked_image: String,
+            trx_locked_discount: Number,
             created_at: Date,
             updated_at: Date
         }
@@ -67,6 +70,6 @@ class ShippingListModel extends Models {
 }
 
 module.exports = function (instance = {}) {
-    const model = new ShippingListModel(instance)
+    const model = new UKMConfigurationModel(instance)
     return model
 }
