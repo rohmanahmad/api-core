@@ -25,6 +25,8 @@ function fastifySwagger (fastify, opts, next) {
     swaggerInstance = fastify['swaggerforclient']
   } else if (opts.prefix.indexOf('/partners/') > -1) {
     swaggerInstance = fastify['swaggerforpartners']
+  } else if (opts.prefix.indexOf('/admin/') > -1) {
+    swaggerInstance = fastify['swaggerforadmin']
   }
   fastify.route({
     url: '/',

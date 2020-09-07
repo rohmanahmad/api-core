@@ -65,6 +65,7 @@ const middlewares = {
 
 const configurations = {
     SwaggerForClient: require('./modules/v1.0/configurations/swagger/Client'),
+    SwaggerForAdmin: require('./modules/v1.0/configurations/swagger/Admin'),
     SwaggerForPartners: require('./modules/v1.0/configurations/swagger/Partners')
 }
 

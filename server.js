@@ -82,11 +82,13 @@ fastify.register(require('fastify-postgres'), function () {
 /* documentation : https://github.com/fastify/fastify-swagger*/
 fastify.register(require('./customize/fastify-swagger'), use('configurations', 'SwaggerForClient'))
 fastify.register(require('./customize/fastify-swagger'), use('configurations', 'SwaggerForPartners')) // using custom 
+fastify.register(require('./customize/fastify-swagger'), use('configurations', 'SwaggerForAdmin')) // using custom 
 
 /* registering routes */
 // register route harus dibawah nya swagger, karena swagger membaca schema yg di dapat dari masing2 routes yg didaftarkan
 fastify.register(route(fastify, 'SwaggerForClient'))
 fastify.register(route(fastify, 'SwaggerForPartners'))
+fastify.register(route(fastify, 'SwaggerForAdmin'))
 
 /* set notfound response handler */
 fastify.setNotFoundHandler({}, function (request, response) {
@@ -123,6 +125,7 @@ fastify.ready(function (err) {
     }
     fastify.swaggerforclient({zoneType: 'client'})
     fastify.swaggerforpartners({zoneType: 'partners'})
+    fastify.swaggerforadmin({zoneType: 'admin'})
     fastify.listen(process.env.APP_PORT)
       .then(async (address) => {
         const ActivityService = fastify.include('services', 'TaskService')(fastify)
