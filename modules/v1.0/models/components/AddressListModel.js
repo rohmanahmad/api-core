@@ -17,20 +17,68 @@ class AddressListModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            address_name: String,
-            address_street: String,
-            address_province: String,
-            address_city: String,
-            address_kecamatan: String,
-            address_kelurahan: String,
-            address_postal_code: String,
-            ukm_id: Number, // relasi ke ukm.id
-            customer_id: Number, // relasi ke customer.id
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            address_name: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            },
+            address_street: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            },
+            address_province: {
+                type: String,
+                stringType: 'bpchar(50)',
+                isNullable: false
+            },
+            address_city: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            },
+            address_kecamatan: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            },
+            address_kelurahan: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            },
+            address_postal_code: {
+                type: String,
+                stringType: 'bpchar(10)',
+                isNullable: false
+            },
+            ukm_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke ukm.id
+            customer_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke customer.id
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

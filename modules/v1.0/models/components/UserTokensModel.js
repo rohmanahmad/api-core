@@ -17,14 +17,38 @@ class UserTokensModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            user_id: Number, // >> user_accounts.id
-            token: String, // text hash
-            expired: Number, // expired date in time 
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            user_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // >> user_accounts.id
+            token: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            }, // text hash
+            expired: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // expired date in time 
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     } 
 

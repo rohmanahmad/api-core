@@ -17,14 +17,38 @@ class ShippingListModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            shipping_name: String,
-            shipping_company_id: Number,
-            is_active: Boolean,
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            shipping_name: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            },
+            shipping_company_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            is_active: {
+                type: Boolean,
+                stringType: 'bool',
+                isNullable: false
+            },
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

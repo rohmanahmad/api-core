@@ -17,16 +17,48 @@ class ConversationListModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            conversation_date: Date,
-            conversation_content: String,
-            conversation_attachment: String,
-            customer_id: Number,
-            ukm_id: Number,
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            conversation_date: {
+                type: Date,
+                stringType: 'date',
+                isNullable: false
+            },
+            conversation_content: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            },
+            conversation_attachment: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            },
+            customer_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            ukm_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

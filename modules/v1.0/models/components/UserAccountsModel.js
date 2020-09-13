@@ -17,17 +17,54 @@ class UserAccountsModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
+        // user account bisa seorang pemilik ukm atau seorang customer (jadi satu)
         return {
-            id: Number,
-            user_email: Number,
-            user_password: Number,
-            user_phonenumber: Number,
-            is_active: Number,
-            is_blocked: Number,
-            ukm_id: Number, // jika user tsb juga sebagai mitra, maka ukm id ada isinya
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            user_email: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            user_password: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            user_phonenumber: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            is_active: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            is_blocked: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            ukm_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // jika user tsb juga sebagai mitra, maka ukm id ada isinya
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

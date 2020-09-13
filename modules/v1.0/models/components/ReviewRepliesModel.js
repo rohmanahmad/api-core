@@ -17,16 +17,48 @@ class ProductReviewRepliesModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            review_id: Number, // relasi ke product_review.id
-            customer_id: Number, // relasi ke customer.id
-            ukm_id: Number, // relasi ke ukm.id
-            reply_text: String,
-            reply_images: String,
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            review_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke product_review.id
+            customer_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke customer.id
+            ukm_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke ukm.id
+            reply_text: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            },
+            reply_images_url: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            },
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

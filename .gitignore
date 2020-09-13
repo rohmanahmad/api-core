@@ -1,3 +1,6 @@
+# custom
+deployDev
+deployProd
 # Logs
 logs
 *.log

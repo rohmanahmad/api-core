@@ -23,34 +23,34 @@ const routes = [
                 "token",
             ],
             response: {
-                // 200: {
-                //     type: 'object',
-                //     properties: {
-                //         statusCode: { type: 'number', example: '200' },
-                //         message: { type: 'string' },
-                //         data: {
-                //             type: 'object',
-                //             properties: {
-                //                 token: {type: 'string', example: 'md5hash'},
-                //                 user: {
-                //                     type: 'object',
-                //                     example: {
-                //                         id: 1,
-                //                         email: 'blabla@bla.com',
-                //                         fullname: 'Rohman Ahmad',
-                //                         partner_data: {
-                //                             status: true,
-                //                             data: {
-                //                                 ukm_id: 3,
-                //                                 ukm_name: 'Serba Ada',
-                //                             }
-                //                         }
-                //                     }
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
+                200: {
+                    type: 'object',
+                    properties: {
+                        statusCode: { type: 'number', example: '200' },
+                        message: { type: 'string' },
+                        data: {
+                            type: 'object',
+                            properties: {
+                                token: {type: 'string', example: 'md5hash'},
+                                user: {
+                                    type: 'object',
+                                    example: {
+                                        id: 1,
+                                        email: 'blabla@bla.com',
+                                        fullname: 'Rohman Ahmad',
+                                        partner_data: {
+                                            status: true,
+                                            data: {
+                                                ukm_id: 3,
+                                                ukm_name: 'Serba Ada',
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         preHandler: [

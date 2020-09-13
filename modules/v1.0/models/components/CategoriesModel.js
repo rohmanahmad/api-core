@@ -17,14 +17,32 @@ class CategoriesModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            parent_id: Number, // yaitu parentid masih dari tabel yg sama
-            category_name: String,
-            category_description: String,
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4'
+            },
+            parent_id: {
+                type: Number,
+                stringType: 'int4'
+            }, // yaitu parentid masih dari tabel yg sama
+            category_name: {
+                type: String,
+                stringType: 'bpchar(30)'
+            },
+            category_description: {
+                type: String,
+                stringType: 'text'
+            },
+            created_at: {
+                type: Date,
+                stringType: 'timestamp'
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp'
+            }
         }
     }
 

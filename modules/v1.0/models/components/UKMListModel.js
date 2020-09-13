@@ -19,15 +19,41 @@ class UKMListModel extends Models {
 
     get schema () {
         return {
-            id: Number,
-            transaction_id: Number, // relasi ke transactions.id
-            trx_product_id: Number, // relase ke product_list.id
-            trx_locked_name: String,
-            trx_locked_price: Number,
-            trx_locked_image: String,
-            trx_locked_discount: Number,
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            account_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke transactions.id
+            ukm_name: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            }, // relase ke product_list.id
+            store_name: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            },
+            address_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

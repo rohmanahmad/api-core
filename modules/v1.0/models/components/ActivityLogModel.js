@@ -16,14 +16,38 @@ class UsersModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            server_ip: String,
-            data: Object,
-            created_at: Date,
-            updated_at: Date,
-            type: String
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            server_ip: {
+                type: String,
+                stringType: 'bpchar(20)',
+                isNullable: false
+            },
+            data: {
+                type: Object,
+                stringType: 'json',
+                isNullable: false
+            },
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            type: {
+                type: String,
+                stringType: 'int4',
+                isNullable: false
+            }
         }
     }
 

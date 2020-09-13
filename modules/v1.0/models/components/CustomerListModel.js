@@ -17,21 +17,73 @@ class CustomerListModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            customer_title: String, // tuan, nyonya, agan, sista
-            customer_fullname: String,
-            is_verified: Boolean, // verifikasi dilakukan untuk menentukan apakah real atau enggak
-            verification_photo: String, // foto bersama ktp untuk prosess verifikasi
-            identity_no: String, // nomor ktp
-            birth_date: Date, // tanggal tanpa jam
-            birth_place: String, // kota tempat lahir
-            main_address_id: Number, // relasi ke address_list.id
-            secondary_address_id: Number, // relasi ke address_list.id
-            is_indonesia: Boolean, // ktp indonesia atau bukan
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            customer_title: {
+                type: String,
+                stringType: 'bpchar(50)',
+                isNullable: false
+            }, // tuan, nyonya, agan, sista
+            customer_fullname: {
+                type: String,
+                stringType: 'bpchar(40)',
+                isNullable: false
+            },
+            is_verified: {
+                type: Boolean,
+                stringType: 'bool',
+                isNullable: false
+            }, // verifikasi dilakukan untuk menentukan apakah real atau enggak
+            verification_photo: {
+                type: String,
+                stringType: 'int4',
+                isNullable: false
+            }, // foto bersama ktp untuk prosess verifikasi
+            identity_no: {
+                type: String,
+                stringType: 'int4',
+                isNullable: false
+            }, // nomor ktp
+            birth_date: {
+                type: Date,
+                stringType: 'int4',
+                isNullable: false
+            }, // tanggal tanpa jam
+            birth_place: {
+                type: String,
+                stringType: 'int4',
+                isNullable: false
+            }, // kota tempat lahir
+            main_address_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke address_list.id
+            secondary_address_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // relasi ke address_list.id
+            is_indonesia: {
+                type: Boolean,
+                stringType: 'int4',
+                isNullable: false
+            }, // ktp indonesia atau bukan
+            created_at: {
+                type: Date,
+                stringType: 'int4',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'int4',
+                isNullable: false
+            }
         }
     }
 

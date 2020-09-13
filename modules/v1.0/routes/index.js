@@ -93,6 +93,7 @@ function callRoute ({instance, swaggerConfig, routeObject, zones, prefix, defini
 module.exports = function (instance, zone) {
     return (context, opts, done) => {
         const swaggerConfig = instance.include('configurations', zone)
+        console.log(`[DEBUG] registrasi route: [GET] ${swaggerConfig.routePrefix}`)
         const routesObj = instance.include('routes')
         const definition = instance.include('services', 'SwaggerDefinitions')
         for (const routerFile in routesObj) {

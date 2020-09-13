@@ -20,14 +20,38 @@ class ProductRateSummary extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            rate_type: String, // product, store or other
-            product_id: Number, // foreign-key dari product_list
-            stars_level: Number, // (type float8)
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            rate_type: {
+                type: String,
+                stringType: 'bpchar(20)',
+                isNullable: false
+            }, // product, store or other
+            product_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // foreign-key dari product_list
+            stars_level: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // (type float8)
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

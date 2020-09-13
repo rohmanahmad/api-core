@@ -24,7 +24,12 @@ const routes = [
         },
         preHandler: [
         ],
-        handler: 'WebviewController.loginCustomerWithGoogle'
+        handler: 'WebviewController.loginCustomerWithGoogle',
+        response: {
+            200: {
+                type: 'html'
+            }
+        }
     },
 ]
 

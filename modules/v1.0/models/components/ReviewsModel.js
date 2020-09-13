@@ -17,16 +17,48 @@ class ProductsModel extends Models {
         return 'pg'
     }
     
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            product_id: Number, // as foreign-key to product_list
-            ukm_id: Number, // as foreign-key to ukm_list
-            customer_id: Number, // as foreign-key to customer_list
-            review_text: String, // dibatasi 255 karakter
-            review_images: String, // dipisahkan tanda koma. metok 4 images
-            created_at: Date,
-            updated_at: Date,
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            product_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // as foreign-key to product_list
+            ukm_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // as foreign-key to ukm_list
+            customer_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // as foreign-key to customer_list
+            review_text: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            }, // dibatasi 255 karakter
+            review_images_url: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            }, // dipisahkan tanda koma. metok 4 images
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
         }
     }
 

@@ -17,13 +17,33 @@ class AvailableShippingModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            ukm_id: Number,
-            shipping_id: Number,
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            ukm_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            shipping_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

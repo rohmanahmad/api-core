@@ -16,15 +16,43 @@ class ProductImagesModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            image_name: String, // akan di tempatkan pada alt di tag <img>
-            product_id: Number, // foreign-key dari product_list
-            image_url: String, // dipisahkan koma. dibatasi max 4 image
-            image_index: Number, // mulai dari 0: defautl 1 gambar ke2 dst
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            image_name: {
+                type: String,
+                stringType: 'bpchar(30)',
+                isNullable: false
+            }, // akan di tempatkan pada alt di tag <img>
+            product_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // foreign-key dari product_list
+            image_url: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            }, // dipisahkan koma. dibatasi max 4 image
+            image_index: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // mulai dari 0: defautl 1 gambar ke2 dst
+            created_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'timestamp',
+                isNullable: false
+            }
         }
     }
 

@@ -17,18 +17,58 @@ class ProductsModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
-            id: Number,
-            category_id: Number, // foreign-key dari category_list
-            product_name: String,
-            product_description: String,
-            product_price: Number,
-            product_status: Number,
-            product_discount: Number,
-            product_stock: Number,
-            created_at: Date,
-            updated_at: Date
+            id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            category_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            }, // foreign-key dari category_list
+            product_name: {
+                type: String,
+                stringType: 'int4',
+                isNullable: false
+            },
+            product_description: {
+                type: String,
+                stringType: 'int4',
+                isNullable: false
+            },
+            product_price: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            product_status: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            product_discount: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            product_stock: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            created_at: {
+                type: Date,
+                stringType: 'int4',
+                isNullable: false
+            },
+            updated_at: {
+                type: Date,
+                stringType: 'int4',
+                isNullable: false
+            }
         }
     }
 
@@ -90,17 +130,13 @@ class ProductsModel extends Models {
             const items = (query.rows || []).map(function (x) {
                 return {
                     product_id: x.id,
-                    category: {
-                        id: x.category_id,
-                        name: x.category_name
-                    },
+                    category_id: x.category_id,
+                    category_name: x.category_name,
                     product_name: x.product_name,
                     product_price: x.product_price,
                     product_stock: x.product_stock,
-                    product_status: {
-                        id: x.product_status,
-                        value: productStatus(x.product_status)
-                    },
+                    product_status_id: x.product_status,
+                    product_status_value: productStatus(x.product_status),
                     product_description: x.product_description,
                     product_discount: x.product_discount,
                     created_at: x.created_at,
