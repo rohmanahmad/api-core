@@ -73,10 +73,6 @@ class TransactionDetailModel extends Models {
                 keys: {id: -1},
                 uniq: true
             },
-            search_autocomplete: { // search shipping
-                keys: {shipping_name: 1},
-                uniq: false
-            },
             date: { // untuk sorting
                 keys: {created_at: -1},
                 uniq: false

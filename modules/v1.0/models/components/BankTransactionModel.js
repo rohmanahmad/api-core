@@ -1,16 +1,15 @@
 'use strict'
 
 const Models = require('../index')
-const {result} = require('lodash')
 
-class TransactionListModel extends Models {
+class BankTransactionModel extends Models {
     constructor(instance) {
         super()
         this.instance = instance
     }
 
     get tableName () {
-        return 'transaction_list'
+        return 'bank_transaction'
     }
 
     get connection () {
@@ -24,34 +23,49 @@ class TransactionListModel extends Models {
                 stringType: 'int4',
                 isNullable: false
             },
-            transaction_id: {
-                type: Number,
-                stringType: 'int4',
-                isNullable: false
-            }, // relasi ke transactions.id
-            trx_product_id: {
-                type: Number,
-                stringType: 'int4',
-                isNullable: false
-            }, // relase ke product_list.id
-            trx_locked_name: {
+            bank_from_name: {
                 type: String,
-                stringType: 'bpchar(30)',
+                stringType: 'bpchar(20)',
                 isNullable: false
             },
-            trx_locked_price: {
-                type: Number,
-                stringType: 'int4',
+            bank_destination_name: {
+                type: String,
+                stringType: 'bpchar(20)',
                 isNullable: false
             },
-            trx_locked_image_urls: {
+            bank_ref_transaction_code: {
+                type: String,
+                stringType: 'bpchar(5)',
+                isNullable: false
+            },
+            bank_sender_account_no: {
+                type: String,
+                stringType: 'bpchar(20)',
+                isNullable: false
+            },
+            bank_sender_note: {
                 type: String,
                 stringType: 'text',
                 isNullable: false
             },
-            trx_locked_discount: {
+            bank_sender_attachment: {
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            },
+            nominal: {
                 type: Number,
                 stringType: 'int4',
+                isNullable: false
+            },
+            approved_by_id: { // relasi ke user_account yg rolenya sebagai admin / operation
+                type: Number,
+                stringType: 'bpchar(20)',
+                isNullable: false
+            },
+            approved_at: { // relasi ke user_account yg rolenya sebagai admin / operation
+                type: Date,
+                stringType: 'timestamp',
                 isNullable: false
             },
             created_at: {
@@ -73,35 +87,16 @@ class TransactionListModel extends Models {
                 keys: {id: -1},
                 uniq: true
             },
-            date: { // untuk sorting
-                keys: {created_at: -1},
-                uniq: false
+            date: { // untuk sorting kebanyakan DESC
+                keys: {created_at: -1}
             }
         }
     }
 
     /* functions */
-
-    /* //blm dipakai
-    async getTotal ({category_id, category_name}) {
-        try {
-            const sql = [`SELECT COUNT(*) FROM ${this.tableName}`]
-            const query = await this.execquery(
-                sql, this.values)
-            return {
-                total: parseInt(result(query, 'rows[0].count', 0)),
-                filters: {
-                    category_id,
-                    category_name
-                }
-            }
-        } catch (err) {
-            throw err
-        }
-    } */
 }
 
 module.exports = function (instance = {}) {
-    const model = new TransactionListModel(instance)
+    const model = new BankTransactionModel(instance)
     return model
 }

@@ -17,7 +17,7 @@ class UKMConfigurationModel extends Models {
         return 'pg'
     }
 
-    get schema () {
+    get schemas () {
         return {
             id: {
                 type: Number,
@@ -57,10 +57,6 @@ class UKMConfigurationModel extends Models {
             primary: {
                 keys: {id: -1},
                 uniq: true
-            },
-            search_autocomplete: { // search shipping
-                keys: {shipping_name: 1},
-                uniq: false
             },
             date: { // untuk sorting
                 keys: {created_at: -1},

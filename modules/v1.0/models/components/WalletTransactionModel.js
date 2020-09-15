@@ -1,16 +1,19 @@
 'use strict'
 
 const Models = require('../index')
-const {result} = require('lodash')
 
-class TransactionListModel extends Models {
+/*
+    tabel ini tidak diubah secara langsung oleh pemilik maupun admin.
+    ini otomatis diubah berdasarkan data dari review dan dihitung menggunakan formula
+*/
+class WalletTransactionModel extends Models {
     constructor(instance) {
         super()
         this.instance = instance
     }
 
     get tableName () {
-        return 'transaction_list'
+        return 'wallet_transaction'
     }
 
     get connection () {
@@ -24,34 +27,54 @@ class TransactionListModel extends Models {
                 stringType: 'int4',
                 isNullable: false
             },
-            transaction_id: {
+            wallet_id: { // product, store or other
                 type: Number,
                 stringType: 'int4',
                 isNullable: false
-            }, // relasi ke transactions.id
-            trx_product_id: {
-                type: Number,
-                stringType: 'int4',
-                isNullable: false
-            }, // relase ke product_list.id
-            trx_locked_name: {
+            }, 
+            ewallet_transaction_type: {// foreign-key dari product_list
                 type: String,
-                stringType: 'bpchar(30)',
+                stringType: 'bpchar(20)',
                 isNullable: false
-            },
-            trx_locked_price: {
+            }, 
+            ewall_send_to_ewallet_id: {// foreign-key dari ukm_list
                 type: Number,
                 stringType: 'int4',
                 isNullable: false
             },
-            trx_locked_image_urls: {
+            ewall_transaction_nominal: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            ewall_payment_method: {
+                type: String,
+                stringType: 'bpchar(20)',
+                isNullable: false
+            },
+            ewall_approved_by_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            ewall_pre_transaction_credits: { // sebelum transaksi
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            ewall_after_transaction_credits: { // setelah transaksi
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
+            ewall_signed_transaction_token: { // token transaksi
                 type: String,
                 stringType: 'text',
                 isNullable: false
             },
-            trx_locked_discount: {
-                type: Number,
-                stringType: 'int4',
+            ewall_approved_at: {
+                type: Date,
+                stringType: 'timestamp',
                 isNullable: false
             },
             created_at: {
@@ -73,7 +96,7 @@ class TransactionListModel extends Models {
                 keys: {id: -1},
                 uniq: true
             },
-            date: { // untuk sorting
+            date: { // untuk sorting kebanyakan DESC
                 keys: {created_at: -1},
                 uniq: false
             }
@@ -81,27 +104,9 @@ class TransactionListModel extends Models {
     }
 
     /* functions */
-
-    /* //blm dipakai
-    async getTotal ({category_id, category_name}) {
-        try {
-            const sql = [`SELECT COUNT(*) FROM ${this.tableName}`]
-            const query = await this.execquery(
-                sql, this.values)
-            return {
-                total: parseInt(result(query, 'rows[0].count', 0)),
-                filters: {
-                    category_id,
-                    category_name
-                }
-            }
-        } catch (err) {
-            throw err
-        }
-    } */
 }
 
 module.exports = function (instance = {}) {
-    const model = new TransactionListModel(instance)
+    const model = new WalletTransactionModel(instance)
     return model
 }

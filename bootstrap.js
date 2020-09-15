@@ -3,8 +3,8 @@ const path = require('path')
 
 const controllers = {
     AuthenticationController: require('./modules/v1.0/controllers/AuthenticationController'),
-    CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
     CallbacksController: require('./modules/v1.0/controllers/CallbacksController'),
+    CategoriesController: require('./modules/v1.0/controllers/CategoriesController'),
     HomeController: require('./modules/v1.0/controllers/HomeController'),
     ProductsController: require('./modules/v1.0/controllers/ProductsController'),
     ReviewsController: require('./modules/v1.0/controllers/ReviewsController'),
@@ -18,29 +18,36 @@ const models = {
     AvailableShipping: require('./modules/v1.0/models/components/AvailableShippingModel'),
     CategoriesModel: require('./modules/v1.0/models/components/CategoriesModel'),
     ConversationListModel: require('./modules/v1.0/models/components/ConversationListModel'),
-    ProductsModel: require('./modules/v1.0/models/components/ProductsModel'),
+    CustomerListModel: require('./modules/v1.0/models/components/CustomerListModel'),
+    EWalletModel: require('./modules/v1.0/models/components/EWalletModel'),
+    PaymentRefsModel: require('./modules/v1.0/models/components/PaymentRefsModel'),
+    ProductFavoritesModel: require('./modules/v1.0/models/components/ProductFavoritesModel'),
     ProductImagesModel: require('./modules/v1.0/models/components/ProductImagesModel'),
-    ReviewsModel: require('./modules/v1.0/models/components/ReviewsModel'),
-    ReviewRepliesModel: require('./modules/v1.0/models/components/ReviewRepliesModel'),
+    ProductsModel: require('./modules/v1.0/models/components/ProductsModel'),
     RateSummaryModel: require('./modules/v1.0/models/components/RateSummaryModel'),
+    ReviewRepliesModel: require('./modules/v1.0/models/components/ReviewRepliesModel'),
+    ReviewsModel: require('./modules/v1.0/models/components/ReviewsModel'),
+    RolesModel: require('./modules/v1.0/models/components/RolesModel'),
     ShippingListModel: require('./modules/v1.0/models/components/ShippingListModel'),
-    UserAccountsModel: require('./modules/v1.0/models/components/UserAccountsModel'),
-    
     TransactionDetailModel: require('./modules/v1.0/models/components/TransactionDetailModel'),
     TransactionListModel: require('./modules/v1.0/models/components/TransactionListModel'),
     UKMConfigurationModel: require('./modules/v1.0/models/components/UKMConfigurationModel'),
     UKMListModel: require('./modules/v1.0/models/components/UKMListModel'),
+    UserAccountsModel: require('./modules/v1.0/models/components/UserAccountsModel'),
+    UserAccountsModel: require('./modules/v1.0/models/components/UserAccountsModel'),
+    UserTokensModel: require('./modules/v1.0/models/components/UserTokensModel'),
+    WalletTransactionModel: require('./modules/v1.0/models/components/WalletTransactionModel'),
 }
 
 const routes = {
     AuthenticationRoutes: require('./modules/v1.0/routes/components/AuthenticationRoutes'),
-    CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
     CallbacksRoutes: require('./modules/v1.0/routes/components/CallbacksRoutes'),
+    CategoriesRoutes: require('./modules/v1.0/routes/components/CategoriesRoutes'),
     HomeRoutes: require('./modules/v1.0/routes/components/HomeRoutes'),
     ProductsRoutes: require('./modules/v1.0/routes/components/ProductsRoutes'),
     ReviewsRoutes: require('./modules/v1.0/routes/components/ReviewsRoutes'),
-    WebviewRoutes: require('./modules/v1.0/routes/components/WebviewRoutes'),
     UserAccountsRoutes: require('./modules/v1.0/routes/components/UserAccountsRoutes'),
+    WebviewRoutes: require('./modules/v1.0/routes/components/WebviewRoutes'),
 }
 
 const services = {

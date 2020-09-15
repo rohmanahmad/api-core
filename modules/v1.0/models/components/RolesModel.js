@@ -1,16 +1,15 @@
 'use strict'
 
 const Models = require('../index')
-const {result} = require('lodash')
 
-class UKMListModel extends Models {
+class Roles extends Models {
     constructor(instance) {
         super()
         this.instance = instance
     }
 
     get tableName () {
-        return 'ukm_list'
+        return 'roles'
     }
 
     get connection () {
@@ -24,22 +23,17 @@ class UKMListModel extends Models {
                 stringType: 'int4',
                 isNullable: false
             },
-            account_id: {
-                type: Number,
-                stringType: 'int4',
-                isNullable: false
-            }, // relasi ke transactions.id
-            ukm_name: {
+            roles_name: { // roles_name berupa admin, client, vendor
                 type: String,
-                stringType: 'bpchar(30)',
-                isNullable: false
-            }, // relase ke product_list.id
-            store_name: {
-                type: String,
-                stringType: 'bpchar(30)',
+                stringType: 'bpchar(20)',
                 isNullable: false
             },
-            address_id: {
+            roles: { // roles berupa string, hanya dipisah menggunakan koma
+                type: String,
+                stringType: 'text',
+                isNullable: false
+            },
+            status: {
                 type: Number,
                 stringType: 'int4',
                 isNullable: false
@@ -63,39 +57,20 @@ class UKMListModel extends Models {
                 keys: {id: -1},
                 uniq: true
             },
-            name: { // untuk searching
-                keys: {ukm_name: -1},
+            name: { // mencari dengan spesifik server dan jenis
+                keys: {roles_name: -1},
                 uniq: false
             },
-            date: { // untuk sorting
-                keys: {created_at: -1},
-                uniq: false
+            date: { // untuk sorting kebanyakan DESC
+                keys: {created_at: -1}
             }
         }
     }
 
     /* functions */
-
-    /* //blm dipakai
-    async getTotal ({category_id, category_name}) {
-        try {
-            const sql = [`SELECT COUNT(*) FROM ${this.tableName}`]
-            const query = await this.execquery(
-                sql, this.values)
-            return {
-                total: parseInt(result(query, 'rows[0].count', 0)),
-                filters: {
-                    category_id,
-                    category_name
-                }
-            }
-        } catch (err) {
-            throw err
-        }
-    } */
 }
 
 module.exports = function (instance = {}) {
-    const model = new UKMListModel(instance)
+    const model = new Roles(instance)
     return model
 }
