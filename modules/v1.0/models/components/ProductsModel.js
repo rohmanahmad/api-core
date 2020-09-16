@@ -31,12 +31,12 @@ class ProductsModel extends Models {
             }, // foreign-key dari category_list
             product_name: {
                 type: String,
-                stringType: 'int4',
+                stringType: 'bpchar(30)',
                 isNullable: false
             },
             product_description: {
                 type: String,
-                stringType: 'int4',
+                stringType: 'text',
                 isNullable: false
             },
             product_price: {
@@ -61,12 +61,12 @@ class ProductsModel extends Models {
             },
             created_at: {
                 type: Date,
-                stringType: 'int4',
+                stringType: 'timestamp',
                 isNullable: false
             },
             updated_at: {
                 type: Date,
-                stringType: 'int4',
+                stringType: 'timestamp',
                 isNullable: false
             }
         }

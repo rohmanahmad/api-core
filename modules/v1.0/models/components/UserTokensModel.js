@@ -35,8 +35,8 @@ class UserTokensModel extends Models {
                 isNullable: false
             }, // text hash
             expired: {
-                type: Number,
-                stringType: 'int4',
+                type: Date,
+                stringType: 'timestamp',
                 isNullable: false
             }, // expired date in time 
             created_at: {

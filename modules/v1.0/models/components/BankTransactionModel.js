@@ -60,7 +60,7 @@ class BankTransactionModel extends Models {
             },
             approved_by_id: { // relasi ke user_account yg rolenya sebagai admin / operation
                 type: Number,
-                stringType: 'bpchar(20)',
+                stringType: 'int4',
                 isNullable: false
             },
             approved_at: { // relasi ke user_account yg rolenya sebagai admin / operation

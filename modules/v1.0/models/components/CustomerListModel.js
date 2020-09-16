@@ -46,7 +46,7 @@ class CustomerListModel extends Models {
             }, // foto bersama ktp untuk prosess verifikasi
             identity_no: {
                 type: String,
-                stringType: 'int4',
+                stringType: 'bpchar(30)',
                 isNullable: false
             }, // nomor ktp
             birth_date: {
@@ -56,7 +56,7 @@ class CustomerListModel extends Models {
             }, // tanggal tanpa jam
             birth_place: {
                 type: String,
-                stringType: 'int4',
+                stringType: 'bpchar(30)',
                 isNullable: false
             }, // kota tempat lahir
             main_address_id: {
@@ -76,12 +76,12 @@ class CustomerListModel extends Models {
             }, // ktp indonesia atau bukan
             created_at: {
                 type: Date,
-                stringType: 'int4',
+                stringType: 'timestamp',
                 isNullable: false
             },
             updated_at: {
                 type: Date,
-                stringType: 'int4',
+                stringType: 'timestamp',
                 isNullable: false
             }
         }
