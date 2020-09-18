@@ -130,12 +130,12 @@ module.exports = function (fastify, opts, next) {
       if (sch && sch.tags && sch.tags.includes(hiddenTag)) {
         continue
       }
-      const routeFullPath = path.join(basePath, route.path)
+      // const routeFullPath = path.join(basePath, route.path)
       const zones = typeof sch.zone === 'string' ? [sch.zone] : sch.zone
       // debugger
       // console.log(route.url, zones, opts.zoneType)
-      if (zones.indexOf(opts.zoneType) > -1) {
-        // console.log('[Swagger]', `(${opts.zoneT÷ype})`, routeFullPath)
+      if (zones.indexOf(opts.zoneType) > -1 && (route.path || '').indexOf(`/${opts.zoneType}/`) > -1) {
+        // console.log('[Swagger]', `(${opts.zoneType})`, route.path)
 
         const schema = transform
           ? transform(sch)

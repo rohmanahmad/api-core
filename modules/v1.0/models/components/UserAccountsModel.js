@@ -26,28 +26,28 @@ class UserAccountsModel extends Models {
                 isNullable: false
             },
             user_email: {
-                type: Number,
-                stringType: 'int4',
+                type: String,
+                stringType: 'bpchar(50)',
                 isNullable: false
             },
             user_password: {
-                type: Number,
-                stringType: 'int4',
+                type: String,
+                stringType: 'text',
                 isNullable: false
             },
             user_phonenumber: {
-                type: Number,
-                stringType: 'int4',
+                type: String,
+                stringType: 'bpchar(20)',
                 isNullable: false
             },
             is_active: {
-                type: Number,
-                stringType: 'int4',
+                type: Boolean,
+                stringType: 'bool',
                 isNullable: false
             },
             is_blocked: {
-                type: Number,
-                stringType: 'int4',
+                type: Boolean,
+                stringType: 'bool',
                 isNullable: false
             },
             ukm_id: {
@@ -97,7 +97,7 @@ class UserAccountsModel extends Models {
 
     get messages () {
         return {
-            invalidUserAndPasswordMessage: 'Invalid Username And Password',
+            invalidUserAndPasswordMessage: 'Invalid User',
             blockedAccountMessage: 'Account Blocked',
             needActivateAccountMessage: 'Your Account Need to be Activating. Please Check Your Email',
         }
@@ -106,21 +106,59 @@ class UserAccountsModel extends Models {
     /* 
     login hanya valid menggunakan email dan password, selainnya pakai verifikasi by phonenumber / google / facebook
     */
-    async doLogin ({email, password}) {
+    async findById (id) {
+        try {
+            const sql = `SELECT * FROM ${this.tableName} WHERE id = $1 LIMIT 1`
+            const q = await this.execquery(sql, [id])
+            return q.rows[0]
+        } catch (err) {
+            throw err
+        }
+    }
+    async findLogin ({ userlogin }) {
         try {
             const {
                 invalidUserAndPasswordMessage,
                 blockedAccountMessage,
                 needActivateAccountMessage
             } = this.messages
-            const hashPassword = md5(password)
-            const sql = `SELECT * FROM ${this.tableName} WHERE user_email = $1 AND user_password = $2`
-            const data = await this.execquery(sql, [email, hashPassword])
-            if (!data) throw new Error(invalidUserAndPasswordMessage)
-            return data
+            const isEmail = userlogin.indexOf('@') > -1
+            const isPhone = !isNaN(Number(userlogin))
+            let opt = {
+                email: '',
+                phonenumber: '',
+                password: ''
+            }
+            const type = isEmail ? 'email' : isPhone ? 'whatsapp' : 'none'
+            if (isEmail) {
+                opt['email'] = userlogin
+            } else if (isPhone) {
+                opt['phonenumber'] = userlogin
+            } else {
+                throw new Error('Invalid Userlogin')
+            }
+            const sql = `SELECT * FROM ${this.tableName} WHERE user_email = $1 OR user_phonenumber = $1 LIMIT 1`
+            let data = await this.execquery(sql, [ userlogin ])
+            if (!data || (data && data.rowCount === 0)) {
+                data = await this.register(opt)
+            }
+            data = data.rows[0]
+            const userid = data.id
+            const OTPCodeModel = this.instance.include('models', 'OTPCodeModel')(this.instance)
+            const otp = await OTPCodeModel.generateOTP({ userid, type })
+            return {
+                opt,
+                type,
+                data
+            }
         } catch (err) {
             throw err
         }
+    }
+
+    async register (data) {
+        const reg = await this.doRegister(data)
+        return reg
     }
 
     async getInformation ({ email, phonenumber }) {
@@ -135,23 +173,24 @@ class UserAccountsModel extends Models {
         }
     }
 
-    async register ({email, password, phonenumber}) {
+    async doRegister ({email, password, phonenumber}) {
         const hashPassword = md5(password)
         const sql = `INSERT INTO ${this.tableName}
             (user_email,    user_password,  user_phonenumber,   is_active,  is_blocked, ukm_id, created_at, updated_at)
             VALUES 
-            ($1,            $2,             $3,                 $4,         $5,         $6,     $7,         $8)`
-        await this.execquery(sql, [
+            ($1,            $2,             $3,                 $4,         $5,         $6,     $7,         $8)
+            RETURNING *`
+        const q = await this.execquery(sql, [
             email,
             password,
             phonenumber,
             false,
             false,
-            null,
+            0,
             new Date(),
             new Date()
         ])
-        return 
+        return q
     }
 }
 

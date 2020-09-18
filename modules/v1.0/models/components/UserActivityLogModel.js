@@ -64,15 +64,14 @@ class UsersModel extends Models {
 
     /* functions */
 
-    async createRestartActivity () {
+    async create (item) {
         try {
             await this.execquery(
-                `INSERT INTO ${this.tableName} (server_ip, type, data, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)`, [
-                    '127.0.0.1',
-                    'restart-server',
-                    {},
-                    new Date(),
-                    new Date()
+                `INSERT INTO ${this.tableName} (from_ip, activity_type, data, created_at) VALUES ($1, $2, $3, $4)`, [
+                    item.from_ip,
+                    item.activity_type,
+                    item.data,
+                    item.created_at
                 ])
             return true
         } catch (err) {

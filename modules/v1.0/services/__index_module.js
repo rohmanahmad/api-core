@@ -1,6 +1,32 @@
 'use strict'
 
 class ServiceModule {
+    async createSuccessActivity ({type, response, ip}, data) {
+        const ActivityModel = this.instance.include('models', 'UserActivityLogModel')(this.instance)
+        await ActivityModel.create({
+            activity_type: type,
+            from_ip: ip || '',
+            data: {
+                params: data,
+                response
+            },
+            created_at: new Date()
+        })
+        return true
+    }
+    async createErrorActivity ({type, err, ip}, data) {
+        const ActivityModel = this.instance.include('models', 'UserActivityLogModel')(this.instance)
+        await ActivityModel.create({
+            activity_type: type,
+            from_ip: ip || '',
+            data: {
+                params: data,
+                errors: err
+            },
+            created_at: new Date()
+        })
+        return true
+    }
     getPaginationList (current, last, filters = {}) {
         /* source: https://gist.github.com/kottenator/9d936eb3e4e3c3e02598 */
         let delta = 2,

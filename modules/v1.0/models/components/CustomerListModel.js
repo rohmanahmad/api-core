@@ -109,7 +109,15 @@ class CustomerListModel extends Models {
     }
 
     /* functions */
-
+    async findById (id) {
+        try {
+            const sql = `SELECT * FROM ${this.tableName} WHERE id = $1 LIMIT 1`
+            const q = await this.execquery(sql, [id])
+            return q.rows[0]
+        } catch (err) {
+            throw err
+        }
+    }
     /* //blm dipakai
     async getTotal ({category_id, category_name}) {
         try {

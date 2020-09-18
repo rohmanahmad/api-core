@@ -2,35 +2,61 @@ const prefix = '/auth'
 const routes = [
     {
         method: 'POST',
-        url: '/',
+        url: '/login',
         // version: '1.0.0', // untuk header. disable dlu. ruwet
         schema: {
-            zone: 'partners',
+            zone: ['client', 'partners'],
             tags: ['Authentication'],
-            summary: 'Login User UKM',
-            description: 'login and authentication for UKM user',
-            security: [
-                {
-                  "apiKey": []
-                }
-            ],
+            summary: 'Login / Register(auto) For User Account',
+            description: 'Login',
             querystring: [],
             body: [
-                'username',
-                'password'
+                'userlogin'
             ],
             response: {
                 200: {
                     type: 'object',
                     properties: {
-                        hello: { type: 'string' }
+                        statusCode: {type: 'number'},
+                        message: {type: 'string'},
+                        data: {type: 'object', properties: {
+                            messageText: { type: 'string' }
+                        }}
                     }
                 }
             }
         },
         preHandler: [
         ],
-        handler: 'AuthenticationController.loginUKMUser'
+        handler: 'AuthenticationController.login'
+    },
+    {
+        method: 'GET',
+        url: '/validate/otp',
+        // version: '1.0.0', // untuk header. disable dlu. ruwet
+        schema: {
+            zone: ['client', 'partners'],
+            tags: ['Authentication'],
+            summary: 'OTP Validation',
+            description: 'Validation',
+            querystring: ['otp_code'],
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        statusCode: {type: 'number'},
+                        message: {type: 'string'},
+                        data: {type: 'object', properties: {
+                            type: { type: 'string' },
+                            need_update_profile: { type: 'boolean' }
+                        }}
+                    }
+                }
+            }
+        },
+        preHandler: [
+        ],
+        handler: 'AuthenticationController.OTPValidation'
     },
 ]
 

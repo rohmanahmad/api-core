@@ -16,6 +16,8 @@ const definitions = {
         limit: {type: 'number'},
         // N
         name: {type: 'string'},
+        // O
+        otp_code: {type: 'string'},
         // P
         page: {type: 'number'},
         pagination: {type: 'string', enum: ['yes', 'no']},
@@ -33,7 +35,7 @@ const definitions = {
         ukm_id: {type: 'number'}
     },
     body: {
-        username: {type: 'string'},
+        userlogin: {type: 'string', example: 'email / phone'},
         password: {type: 'string'},
         full_name: {type: 'string'},
         given_name: {type: 'string'},

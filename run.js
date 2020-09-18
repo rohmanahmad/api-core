@@ -262,6 +262,17 @@ class Run {
     }
 }
 
+/**
+ * jenis perintah:
+    - schema
+    - data
+ * cara menggunakan:
+    - schema
+        : node run.js --type=schema
+    - data
+        : node run.js --type=data [--limit=number --tables=string_separated_by_coma --prefix=string --customerId=number]
+        - limit: available on table is products
+ */
 new Run()
     .handle(process.argv)
     .catch(console.error)
