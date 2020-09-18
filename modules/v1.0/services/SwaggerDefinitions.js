@@ -3,7 +3,7 @@ const {result} = require('lodash')
 const definitions = {
     querystring: {
         // C
-        category_id: {type: 'string'},
+        category_id: {type: 'number'},
         category_name: {type: 'string'},
         customer_id: {type: 'number'},
         // F

@@ -9,7 +9,7 @@ class UsersModel extends Models {
     }
 
     get tableName () {
-        return 'application_events_log'
+        return 'user_activities'
     }
 
     get connection () {
@@ -23,8 +23,14 @@ class UsersModel extends Models {
                 stringType: 'int4',
                 isNullable: false
             },
-            server_ip: {
+            from_ip: {
                 type: String,
+                stringType: 'bpchar(20)',
+                isNullable: false
+            },
+            // examples: searching, checkout, topup, many others
+            activity_type: {
+                type: 'string',
                 stringType: 'bpchar(20)',
                 isNullable: false
             },
@@ -37,16 +43,6 @@ class UsersModel extends Models {
                 type: Date,
                 stringType: 'timestamp',
                 isNullable: false
-            },
-            updated_at: {
-                type: Date,
-                stringType: 'timestamp',
-                isNullable: false
-            },
-            type: {
-                type: String,
-                stringType: 'bpchar(20)',
-                isNullable: false
             }
         }
     }
@@ -57,9 +53,8 @@ class UsersModel extends Models {
                 keys: {id: -1},
                 uniq: true
             },
-            server: { // mencari dengan spesifik server dan jenis
-                keys: {server_ip: -1, type: -1},
-                uniq: false
+            type: { // untuk search by type
+                keys: {activity_type: 1}
             },
             date: { // untuk sorting kebanyakan DESC
                 keys: {created_at: -1}

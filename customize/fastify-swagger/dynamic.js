@@ -85,7 +85,7 @@ module.exports = function (fastify, opts, next) {
         title: pkg.name || ''
       }
     }
-    if (host) swaggerObject.host = host
+    if (host || opts.host) swaggerObject.host = (host || opts.host)
     if (schemes) swaggerObject.schemes = schemes
     if (basePath) swaggerObject.basePath = basePath
     if (consumes) swaggerObject.consumes = consumes

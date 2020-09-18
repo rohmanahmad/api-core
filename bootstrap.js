@@ -35,6 +35,7 @@ const models = {
     UKMListModel: require('./modules/v1.0/models/components/UKMListModel'),
     UserAccountsModel: require('./modules/v1.0/models/components/UserAccountsModel'),
     UserAccountsModel: require('./modules/v1.0/models/components/UserAccountsModel'),
+    UserActivityLogModel: require('./modules/v1.0/models/components/UserActivityLogModel'),
     UserTokensModel: require('./modules/v1.0/models/components/UserTokensModel'),
     WalletTransactionModel: require('./modules/v1.0/models/components/WalletTransactionModel'),
 }

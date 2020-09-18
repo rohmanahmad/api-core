@@ -4,19 +4,13 @@
 
 exports.list = async function (request, response) {
     const srv = this.include('services', 'ProductsService')(this)
-    const {items, count, filters, pagination} = await srv.list(request.query, request.url)
-    response.send({
+    const data = await srv.list(request.query, request.url)
+    const responseData = {
         statusCode: 200,
         message: 'OK',
-        data: {
-            metadata: {
-                count: items.length,
-                filters
-            },
-            pagination,
-            dataitems: items
-        }
-    })
+        data
+    }
+    response.send(responseData)
 }
 
 exports.detail = async function (request, response) {

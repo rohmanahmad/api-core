@@ -123,9 +123,9 @@ fastify.ready(function (err) {
         console.error(err)
         process.exit(0)
     }
-    fastify.swaggerforclient({zoneType: 'client'})
-    fastify.swaggerforpartners({zoneType: 'partners'})
-    fastify.swaggerforadmin({zoneType: 'admin'})
+    fastify.swaggerforclient({zoneType: 'client', host: process.env.APP_DOMAIN})
+    fastify.swaggerforpartners({zoneType: 'partners', host: process.env.APP_DOMAIN})
+    fastify.swaggerforadmin({zoneType: 'admin', host: process.env.APP_DOMAIN})
     fastify.listen(process.env.APP_PORT, process.env.APP_HOST)
       .then(async (address) => {
         const ActivityService = fastify.include('services', 'TaskService')(fastify)

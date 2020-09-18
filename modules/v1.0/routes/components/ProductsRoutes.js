@@ -42,9 +42,22 @@ const routes = [
                                 metadata: {
                                     type: 'object',
                                     properties: {
-                                        count: { type: 'number', example: 2 },
-                                        limit: { type: 'number', example: 10 },
-                                        page: { type: 'number', example: 1 }
+                                        count: {type: 'number', example: 2},
+                                        filters: {
+                                            type: 'object',
+                                            properties: {
+                                                product_id: {type: 'number'},
+                                                category_id: {type: 'number'},
+                                                product_name: {type: 'string'},
+                                                product_stock: {type: 'string'},
+                                                product_status: {type: 'number'},
+                                                sort_by: {type: 'string'},
+                                                sort_dir: {type: 'string'},
+                                                limit: {type: 'number'},
+                                                page: {type: 'number'},
+                                                pagination: {type: 'string'},
+                                            }
+                                        }
                                     }
                                 },
                                 pagination: {
@@ -52,11 +65,12 @@ const routes = [
                                     properties: {
                                         disabled: {type: 'boolean'},
                                         current: {type: 'number'},
-                                        items: {type: 'array', example: [{label: '1', link: '/link'}]},
+                                        path: {type: 'string'},
+                                        items: {type: 'array', example: [{label: '1', position: '1', current: false}]},
                                         limitPerPage: {type: 'number', example: 10}
                                     }
                                 },
-                                dataitems: {
+                                items: {
                                     type: 'array',
                                     items: {
                                         type: "object",
@@ -90,10 +104,19 @@ const routes = [
                                             product_price: { type: 'number', example: 20000 },
                                             product_stock: { type: 'number', example: 2 },
                                             product_stars: { type: 'object', example: { value: 4.5, label: 'Good Product' }},
+                                            created_at: { type: 'string', example: '2020-01-01 20:02:02' },
+                                            updated_at: { type: 'string', example: '2020-01-01 20:02:02' },
                                             // only for logged users
                                             is_favorite: {type: 'boolean', example: true},
-                                            created_at: { type: 'string', example: '2020-01-01 20:02:02' },
-                                            updated_at: { type: 'string', example: '2020-01-01 20:02:02' }
+                                            // image
+                                            product_thumbnail: {type: 'string', example: 'http://blablabla'},
+                                            product_thumbnail_title: {type: 'string', example: 'blablabla'},
+                                            metadata: {type: 'object', properties: {
+                                                detail_url: {type: 'string', example: '/api/product/detail/1'},
+                                                is_new: {type: 'boolean', example: false},
+                                                is_flash: {type: 'boolean', example: false}, // blm di tentukan formula
+                                                is_limited: {type: 'boolean', example: false} // blm di tentukan formula
+                                            }}
                                         }
                                     }
                                 }

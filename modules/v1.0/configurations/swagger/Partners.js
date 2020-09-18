@@ -15,7 +15,7 @@ module.exports = {
         url: 'https://swagger.io',
         description: 'Find more info here'
       },
-      host: 'localhost:4000',
+      host: process.env.APP_DOMAIN,
       basePath: basePath,
       schemes: ['http'],
       consumes: ['application/json'],

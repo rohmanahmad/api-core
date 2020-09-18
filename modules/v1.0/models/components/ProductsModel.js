@@ -2,6 +2,7 @@
 
 const Models = require('../index')
 const {result, set} = require('lodash')
+const moment = require('moment')
 
 class ProductsModel extends Models {
     constructor(instance) {
@@ -98,21 +99,24 @@ class ProductsModel extends Models {
     - sort_by: [name, price]
     - sort_dir: [asc, desc] > default: asc
      */
-    async list ({product_id, category_id, product_name, product_stock, product_status, sort_by, sort_dir, limit, page, pagination}, parentLink) {
+    async list (filters, {parentLink}) {
         try {
+            const {product_id, category_id, product_name, product_stock, product_status, sort_by, sort_dir, limit, page, pagination} = filters
             const {tableName: categoryTable} = this.instance.include('models', 'CategoriesModel')(this.instance)
+            const {tableName: imagesTable} = this.instance.include('models', 'ProductImagesModel')(this.instance)
             const {productStatus} = this.instance.include('helpers', 'ProductHelper')(this.instance)
-            const usePagination = pagination === 'yes'
             const currentLimit = parseInt(limit) || 10
             const currentPage = parseInt(page) || 1
             const currentOffset = currentLimit * (currentPage - 1)
-            let sql = [`SELECT ${this.tableName}.*, ${categoryTable}.category_name FROM ${this.tableName}`]
+            let sql = [`SELECT ${this.tableName}.*, ${categoryTable}.category_name, ${imagesTable}.image_name, ${imagesTable}.image_url as thumbnail FROM ${this.tableName}`]
             sql.push(`LEFT JOIN ${categoryTable} ON ${this.tableName}.category_id = ${categoryTable}.id`)
+            sql.push(`LEFT JOIN ${imagesTable} ON ${this.tableName}.id = ${imagesTable}.product_id`)
             if (product_id) sql.push(this.where('id', parseInt(product_id)))
             if (category_id) sql.push(this.where('category_id', parseInt(category_id)))
             if (product_name) sql.push(this.whereLike('product_name', `%${product_name}%`))
             if (product_stock) sql.push(this.where('product_stock', parseInt(product_stock)))
             if (product_status) sql.push(this.where('product_status', parseInt(product_status)))
+            sql.push(this.where(`${imagesTable}.image_index`, 1))
             if (sort_by) {
                 const direction = sort_dir === 'desc' ? 'DESC' : 'ASC'
                 if (sort_by === 'name') {
@@ -123,57 +127,41 @@ class ProductsModel extends Models {
             }
             sql.push(this.limit(currentLimit))
             sql.push(this.offset(currentOffset))
-            const query = await this.execquery(
+            let query = await this.execquery(
                 sql, this.values)
             if (!query) query = {}
             if (query && !query.rows) query = {}
             const items = (query.rows || []).map(function (x) {
                 return {
                     product_id: x.id,
-                    category_id: x.category_id,
-                    category_name: x.category_name,
+                    category: {
+                        id: x.category_id,
+                        name: x.category_name
+                    },
                     product_name: x.product_name,
                     product_price: x.product_price,
                     product_stock: x.product_stock,
-                    product_status_id: x.product_status,
-                    product_status_value: productStatus(x.product_status),
+                    product_status: {
+                        id: x.product_status,
+                        value: productStatus(x.product_status)
+                    },
                     product_description: x.product_description,
                     product_discount: x.product_discount,
+                    product_thumbnail: x.thumbnail,
+                    product_thumbnail_title: x.image_name,
                     created_at: x.created_at,
-                    updated_at: x.updated_at
+                    updated_at: x.updated_at,
+                    is_favorite: false, // blm diitentukan masih-an
+                    metadata: {
+                        detail_url: `/api/product/detail?id=${x.id}`,
+                        is_new: moment().diff(moment(x.created_at), 'd') < 2,
+                        is_limited: false, // menyusul, blm ada formula,
+                        is_flash: false  // blm di tentukan formula
+                    }
                 }
             })
-            const data = {
-                items,
-                count: (query.rows || []).length,
-                filters: {
-                    product_id,
-                    category_id,
-                    product_name,
-                    product_stock,
-                    product_status,
-                    sort_by,
-                    sort_dir,
-                    limit: currentLimit,
-                    page: currentPage,
-                },
-                pagination: {}
-            }
-            if (usePagination) {
-                this.values = [] // reset values of query
-                this.whereClause = [] // reset values of query
-                const t = await this.getTotal({product_id, category_id, product_name, product_stock, product_status})
-                data['pagination'] = this.usePaginationModule({
-                    total: t.total,
-                    // total: 30,
-                    current: currentPage,
-                    limitPerPage: currentLimit,
-                    parentLink
-                })
-            } else {
-                data.pagination = {disabled: true}
-            }
-            return data
+            const metas = { currentPage, currentLimit }
+            return {items, count: (query.rows || []).length, filters, metas}
         } catch (err) {
             throw err
         }
