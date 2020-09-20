@@ -78,6 +78,12 @@ class ServiceModule {
         }
     }
 
+    sleep(timeoutInSecond = 1) {
+        return new Promise((resolve) => {
+            setTimeout(resolve, timeoutInSecond * 1000);
+        })
+    }
+
 }
 
 module.exports = ServiceModule

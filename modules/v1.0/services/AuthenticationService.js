@@ -10,10 +10,11 @@ class AuthenticationService extends Services {
 
     async loginWithAutoRegister ({ userlogin, password }, { ip }) {
         try {
+            const { redis } = this.instance
             const UserAccountsModel = this.instance.include('models', 'UserAccountsModel')(this.instance)
             const {opt, data, type} = await UserAccountsModel.findLogin({ userlogin })
             // sending events to redis
-            // ....
+            
             // creating log activity (success)
             await this.createSuccessActivity({type: 'login', response: data, ip}, { userlogin })
             return {

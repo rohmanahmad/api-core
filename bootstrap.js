@@ -55,6 +55,7 @@ const services = {
     AuthenticationService: require('./modules/v1.0/services/AuthenticationService'),
     CategoriesService: require('./modules/v1.0/services/CategoriesService'),
     ProductsService: require('./modules/v1.0/services/ProductsService'),
+    RedisService: require('./modules/v1.0/services/RedisService'),
     ReviewsService: require('./modules/v1.0/services/ReviewsService'),
     SwaggerDefinitions: require('./modules/v1.0/services/SwaggerDefinitions'),
     TaskService: require('./modules/v1.0/services/TaskService'),
@@ -77,13 +78,21 @@ const configurations = {
     SwaggerForPartners: require('./modules/v1.0/configurations/swagger/Partners')
 }
 
+const commands = {
+    EmailSender: require('./modules/v1.0/commands/EmailSender'),
+    WhatsappSender: require('./modules/v1.0/commands/WhatsappSender'),
+    Migration: require('./modules/v1.0/commands/Migration'),
+    DummyData: require('./modules/v1.0/commands/DummyData'),
+    Test: require('./modules/v1.0/commands/Test')
+}
+
 const statics = {
     GoogleLogin: readFileSync(path.join(__dirname, 'modules/v1.0/statics/GoogleLogin.html'), {encoding: 'utf-8'})
 }
 
 const environments = process.env
 
-const m = {models, controllers, routes, services, middlewares, helpers, configurations, statics, environments}
+const m = {models, controllers, routes, services, middlewares, helpers, configurations, statics, environments, commands}
 const use = function (mode, name) {
     /* 
     example:
