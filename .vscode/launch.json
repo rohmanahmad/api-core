@@ -9,48 +9,9 @@
             "runtimeExecutable": "/Users/rohmanahmad/.nvm/versions/node/v12.18.3/bin/node",
             "cwd": "${workspaceFolder}",
             "request": "launch",
-            "name": "Run Schema",
-            "program": "run.js",
-            "args": ["--type=schema"],
-            "outputCapture": "std",
-            "skipFiles": [
-                "<node_internals>/**"
-            ]
-        },
-        {
-            "type": "node",
-            "runtimeExecutable": "/Users/rohmanahmad/.nvm/versions/node/v12.18.3/bin/node",
-            "cwd": "${workspaceFolder}",
-            "request": "launch",
-            "name": "Run Dummy Data",
-            "program": "run.js",
-            "args": ["--type=data", "--tables=products,customers", "--prefix=hy"],
-            "outputCapture": "std",
-            "skipFiles": [
-                "<node_internals>/**"
-            ]
-        },
-        {
-            "type": "node",
-            "runtimeExecutable": "/Users/rohmanahmad/.nvm/versions/node/v12.18.3/bin/node",
-            "cwd": "${workspaceFolder}",
-            "request": "launch",
-            "name": "Run Test Redis Publish",
-            "program": "run.js",
-            "args": ["--type=test", "--command=redispublish", "--channel=otp", "--message=halo"],
-            "outputCapture": "std",
-            "skipFiles": [
-                "<node_internals>/**"
-            ]
-        },
-        {
-            "type": "node",
-            "runtimeExecutable": "/Users/rohmanahmad/.nvm/versions/node/v12.18.3/bin/node",
-            "cwd": "${workspaceFolder}",
-            "request": "launch",
-            "name": "Run whatsapp",
-            "program": "run.js",
-            "args": ["--type=whatsapp"],
+            "name": "Run Server",
+            "program": "server.js",
+            "args": [],
             "outputCapture": "std",
             "skipFiles": [
                 "<node_internals>/**"
