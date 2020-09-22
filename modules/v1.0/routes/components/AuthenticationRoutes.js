@@ -20,7 +20,8 @@ const routes = [
                         statusCode: {type: 'number'},
                         message: {type: 'string'},
                         data: {type: 'object', properties: {
-                            messageText: { type: 'string' }
+                            messageText: { type: 'string' },
+                            status: { type: 'string' }
                         }}
                     }
                 }
@@ -39,7 +40,7 @@ const routes = [
             tags: ['Authentication'],
             summary: 'OTP Validation',
             description: 'Validation',
-            querystring: ['otp_code'],
+            querystring: ['username', 'otp_code'],
             response: {
                 200: {
                     type: 'object',

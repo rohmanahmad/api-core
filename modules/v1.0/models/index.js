@@ -49,6 +49,28 @@ class Models {
         return sql
     }
 
+    and (data = {}) {
+        let i = 1
+        let andStatement = ''
+        for (const x in data) {
+            if (i > 1) andStatement += ' AND '
+            andStatement += `${x}=${data[x]}`
+            i += 1
+        }
+        return andStatement
+    }
+
+    or (data = {}) {
+        let i = 1
+        let orStatement = ''
+        for (const x in data) {
+            if (i > 1) orStatement += ' OR '
+            orStatement += `${x}=${data[x]}`
+            i += 1
+        }
+        return orStatement
+    }
+
     async execquery (sql = '', data = []) {
         try {
             const client = await this.connect()

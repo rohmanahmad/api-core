@@ -55,6 +55,11 @@ class UserAccountsModel extends Models {
                 stringType: 'int4',
                 isNullable: false
             }, // jika user tsb juga sebagai mitra, maka ukm id ada isinya
+            customer_id: {
+                type: Number,
+                stringType: 'int4',
+                isNullable: false
+            },
             created_at: {
                 type: Date,
                 stringType: 'timestamp',
@@ -142,6 +147,7 @@ class UserAccountsModel extends Models {
             if (!data || (data && data.rowCount === 0)) {
                 data = await this.register(opt)
             }
+            debugger
             data = data.rows[0]
             const userid = data.id
             const OTPCodeModel = this.instance.include('models', 'OTPCodeModel')(this.instance)
@@ -176,9 +182,9 @@ class UserAccountsModel extends Models {
     async doRegister ({email, password, phonenumber}) {
         const hashPassword = md5(password)
         const sql = `INSERT INTO ${this.tableName}
-            (user_email,    user_password,  user_phonenumber,   is_active,  is_blocked, ukm_id, created_at, updated_at)
+            (customer_id, user_email,    user_password,  user_phonenumber,   is_active,  is_blocked, ukm_id, created_at, updated_at)
             VALUES 
-            ($1,            $2,             $3,                 $4,         $5,         $6,     $7,         $8)
+            (0, $1,            $2,             $3,                 $4,         $5,         $6,     $7,         $8)
             RETURNING *`
         const q = await this.execquery(sql, [
             email,

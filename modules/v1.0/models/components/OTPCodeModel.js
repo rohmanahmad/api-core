@@ -118,6 +118,36 @@ class OTPCodeModel extends Models {
         const q = await this.getCode(code)
         return (q && q.length === 0) // true or false
     }
+
+    async findUserOTPByType ({type, username, otp}) {
+        try {
+            const {tableName: UserTable} = this.instance.include('models', 'UserAccountsModel')(this.instance)
+            let statement1 = {}
+            statement1[`${this.tableName}.otp_code`] = '$1'
+            statement1[`${this.tableName}.otp_type`] = '$2'
+            statement1[`${UserTable}.user_email`] = '$3'
+            const andStatement1 = this.and(statement1)
+            let statement2 = {}
+            statement2[`${this.tableName}.otp_code`] = '$1'
+            statement2[`${this.tableName}.otp_type`] = '$2'
+            statement2[`${UserTable}.user_phonenumber`] = '$3'
+            let andStatement2 = this.and(statement2)
+            const sql = `SELECT ${UserTable}.*
+            FROM ${this.tableName}
+            LEFT JOIN ${UserTable}
+                ON ${UserTable}.id = ${this.tableName}.user_id
+            WHERE
+                (${andStatement1})
+                OR
+                (${andStatement2})
+            LIMIT 1`
+            const q = await this.execquery(sql, [otp, type, username])
+            debugger
+            return q && q.rows && q.rows[0] ? q.rows[0] : null
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 module.exports = function (instance = {}) {
