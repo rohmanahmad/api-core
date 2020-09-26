@@ -17,8 +17,8 @@ const routes = [
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: {type: 'number'},
-                        message: {type: 'string'},
+                        statusCode: {type: 'number', example: 200},
+                        message: {type: 'string', example: 'ok'},
                         data: {type: 'object', properties: {
                             messageText: { type: 'string' },
                             status: { type: 'string' }
@@ -49,7 +49,10 @@ const routes = [
                         message: {type: 'string'},
                         data: {type: 'object', properties: {
                             type: { type: 'string' },
-                            need_update_profile: { type: 'boolean' }
+                            need_update_profile: { type: 'boolean' },
+                            go_to: { type: 'string', example: '/dashboard > available if need_update_profile = false' },
+                            token: { type: 'string', example: 'hash with >30 char'},
+                            valid_until: { type: 'string', example: '2020-02-01 23:00:21'}
                         }}
                     }
                 }
