@@ -120,15 +120,19 @@ class UserAccountsModel extends Models {
             throw err
         }
     }
-    async findLogin ({ userlogin }) {
+    isEmail (str = '') {
+        return str.indexOf('@') > -1
+    }
+    isPhone (str = '') {
+        return !isNaN(Number(str))
+    }
+    /** 
+     * userlogin : phone / email
+    */
+    async findByUserLogin (userlogin) {
         try {
-            const {
-                invalidUserAndPasswordMessage,
-                blockedAccountMessage,
-                needActivateAccountMessage
-            } = this.messages
-            const isEmail = userlogin.indexOf('@') > -1
-            const isPhone = !isNaN(Number(userlogin))
+            const isEmail = this.isEmail(userlogin)
+            const isPhone = this.isPhone(userlogin)
             let opt = {
                 email: '',
                 phonenumber: '',
@@ -144,17 +148,45 @@ class UserAccountsModel extends Models {
             }
             const sql = `SELECT * FROM ${this.tableName} WHERE user_email = $1 OR user_phonenumber = $1 LIMIT 1`
             let data = await this.execquery(sql, [ userlogin ])
+            return {data, opt}
+        } catch (err) {
+            throw err
+        }
+    }
+    async findOne ({ username }) {
+        try {
+            let criteria = ''
+            let params = []
+            if (username) {
+                criteria += this.or({user_email: '$1', user_phonenumber: '$1'})
+                params.push(username)
+            }
+            const sql = `SELECT * FROM ${this.tableName} WHERE ${criteria} LIMIT 1`
+            let data = await this.execquery(sql, params)
+            debugger
+            return data.rows[0]
+        } catch (err) {
+            throw err
+        }
+    }
+    async findLogin ({ userlogin, method }) {
+        try {
+            const {
+                invalidUserAndPasswordMessage,
+                blockedAccountMessage,
+                needActivateAccountMessage
+            } = this.messages
+            let {data, opt} = await this.findByUserLogin(userlogin)
             if (!data || (data && data.rowCount === 0)) {
                 data = await this.register(opt)
             }
-            debugger
             data = data.rows[0]
             const userid = data.id
             const OTPCodeModel = this.instance.include('models', 'OTPCodeModel')(this.instance)
-            const otp = await OTPCodeModel.generateOTP({ userid, type })
+            const otp = await OTPCodeModel.generateOTP({ userid, method })
             return {
-                opt,
-                type,
+                otp,
+                method,
                 data
             }
         } catch (err) {

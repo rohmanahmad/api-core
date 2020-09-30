@@ -18,6 +18,7 @@ const definitions = {
         name: {type: 'string'},
         // O
         otp_code: {type: 'string'},
+        otp_method: {type: 'string', example: 'email / whatsapp'},
         // P
         page: {type: 'number'},
         pagination: {type: 'string', enum: ['yes', 'no']},
@@ -36,14 +37,23 @@ const definitions = {
         ukm_id: {type: 'number'}
     },
     body: {
-        userlogin: {type: 'string', example: 'email / phone'},
-        password: {type: 'string'},
-        full_name: {type: 'string'},
-        given_name: {type: 'string'},
-        family_name: {type: 'string'},
+        // A
         avatar: {type: 'string'},
+        // E
         email: {type: 'string'},
-        token: {type: 'string'}
+        // F
+        family_name: {type: 'string'},
+        full_name: {type: 'string'},
+        // G
+        given_name: {type: 'string'},
+        // O
+        otp_method: {type: 'string', example: 'email / whatsapp'},
+        // P
+        password: {type: 'string'},
+        // T
+        token: {type: 'string'},
+        // U
+        userlogin: {type: 'string', example: 'email / phone'},
     },
     headers: {
         version: {type: 'string', default: '1.0.0'}

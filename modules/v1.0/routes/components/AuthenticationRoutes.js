@@ -11,7 +11,8 @@ const routes = [
             description: 'Login',
             querystring: [],
             body: [
-                'userlogin'
+                'userlogin',
+                'otp_method'
             ],
             response: {
                 200: {
@@ -21,7 +22,8 @@ const routes = [
                         message: {type: 'string', example: 'ok'},
                         data: {type: 'object', properties: {
                             messageText: { type: 'string' },
-                            status: { type: 'string' }
+                            status: { type: 'string' },
+                            otp_dev: { type: 'string' }
                         }}
                     }
                 }
@@ -40,7 +42,7 @@ const routes = [
             tags: ['Authentication'],
             summary: 'OTP Validation',
             description: 'Validation',
-            querystring: ['username', 'otp_code'],
+            querystring: ['username', 'otp_code', 'otp_method'],
             response: {
                 200: {
                     type: 'object',

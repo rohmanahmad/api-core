@@ -8,21 +8,24 @@ class AuthenticationService extends Services {
         this.instance = instance
     }
 
-    async loginWithAutoRegister ({ userlogin, password }, { ip }) {
+    async loginWithAutoRegister ({ userlogin, otp_method: method }, { ip }) {
         try {
-            const { redis } = this.instance
+            const RedisService = this.instance.include('services', 'RedisService')(this.instance)
             const UserAccountsModel = this.instance.include('models', 'UserAccountsModel')(this.instance)
-            const {opt, data, type} = await UserAccountsModel.findLogin({ userlogin })
+            const {otp, data} = await UserAccountsModel.findLogin({ userlogin, method })
             // sending events to redis
-            
+            let user = data.user_email
+            if (method === 'whatsapp') user = data.user_phonenumber
+            await RedisService.sendTriggerOTP({method, otp, user: user.trim()})
             // creating log activity (success)
             await this.createSuccessActivity({type: 'login', response: data, ip}, { userlogin })
             return {
                 statusCode: 200,
                 message: 'OK',
                 data: {
-                    messageText: `Mohon Cek ${type} Untuk Melakukan Validasi OTP`,
-                    status: 'sent'
+                    messageText: `Mohon Cek ${method} Untuk Melakukan Validasi OTP`,
+                    status: 'sent',
+                    otp_dev: otp
                 }
             }
         } catch (err) {
@@ -35,8 +38,9 @@ class AuthenticationService extends Services {
     async doValidateOTP ({ username, otp_code: otp }, { ip }) {
         try {
             if (!otp) throw new Error('Invalid OTP')
-            const { OTPCodeModel, UKMListModel, CustomerListModel } = this.instance.include('models')
-            const userdata = await OTPCodeModel(this.instance).findUserOTPByType({type: 'whatsapp', username, otp})
+            const { OTPCodeModel, UKMListModel, CustomerListModel, UserAccountsModel } = this.instance.include('models')
+            const user = await UserAccountsModel(this.instance).findOne({username})
+            const userdata = await OTPCodeModel(this.instance).findUserOTPByType({type: 'whatsapp', userid: user.id, otp})
             if (!userdata) throw new Error('Invalid Code')
             if (userdata.is_blocked) throw new Error('Account kamu Terblokir, Harap Hubungi Support Kami Untuk Pemulihan.')
             let responseData = {}

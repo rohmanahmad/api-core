@@ -76,11 +76,11 @@ class OTPCodeModel extends Models {
     }
 
     /* functions */
-    async generateOTP ({userid, type}) {
+    async generateOTP ({userid, method}) {
         try {
             let code = `${Math.random() * 1010101010}`.substr(0, 6)
             const isAvailable = await this.isAvailable(code)
-            if (!isAvailable) code = await this.generateOTP({ userid }) // getting new otp
+            if (!isAvailable) code = await this.generateOTP({ userid, method }) // getting new otp
             const sql = `INSERT INTO ${this.tableName}
                 (
                     user_id,
@@ -96,7 +96,7 @@ class OTPCodeModel extends Models {
             const q = this.execquery(sql, [
                 userid,
                 code,
-                type,
+                method,
                 0,
                 moment().add(10, 'm').toDate(), // active only 10minutes from starting
                 new Date(),
@@ -119,29 +119,28 @@ class OTPCodeModel extends Models {
         return (q && q.length === 0) // true or false
     }
 
-    async findUserOTPByType ({type, username, otp}) {
+    async findUserOTPByType ({type, userid, otp}) {
         try {
             const {tableName: UserTable} = this.instance.include('models', 'UserAccountsModel')(this.instance)
             let statement1 = {}
             statement1[`${this.tableName}.otp_code`] = '$1'
             statement1[`${this.tableName}.otp_type`] = '$2'
-            statement1[`${UserTable}.user_email`] = '$3'
+            statement1[`${this.tableName}.user_id`] = '$3'
+            statement1[`${this.tableName}.status`] = '$4'
             const andStatement1 = this.and(statement1)
-            let statement2 = {}
-            statement2[`${this.tableName}.otp_code`] = '$1'
-            statement2[`${this.tableName}.otp_type`] = '$2'
-            statement2[`${UserTable}.user_phonenumber`] = '$3'
-            let andStatement2 = this.and(statement2)
+            // let statement2 = {}
+            // statement2[`${this.tableName}.otp_code`] = '$1'
+            // statement2[`${this.tableName}.otp_type`] = '$2'
+            // statement2[`${UserTable}.user_phonenumber`] = '$3'
+            // let andStatement2 = this.and(statement2)
             const sql = `SELECT ${UserTable}.*
             FROM ${this.tableName}
             LEFT JOIN ${UserTable}
                 ON ${UserTable}.id = ${this.tableName}.user_id
             WHERE
                 (${andStatement1})
-                OR
-                (${andStatement2})
             LIMIT 1`
-            const q = await this.execquery(sql, [otp, type, username])
+            const q = await this.execquery(sql, [otp, type, userid, 0])
             debugger
             return q && q.rows && q.rows[0] ? q.rows[0] : null
         } catch (err) {
