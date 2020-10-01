@@ -1,9 +1,10 @@
+require('dotenv').config()
 const {readFileSync} = require('fs')
 const path = require('path')
 const fplugin = require('fastify-plugin')
 const moment = require('moment-timezone')
 const helmet = require('fastify-helmet')
-const fastifyEnv = require('fastify-env')
+// const fastifyEnv = require('fastify-env')
 const formbody = require('fastify-formbody')
 const fastify = require('fastify')
 const postgres = require('fastify-postgres')
@@ -65,6 +66,7 @@ const services = {
     ProductsService: require('./modules/v1.0/services/ProductsService'),
     RedisService: require('./modules/v1.0/services/RedisService'),
     ReviewsService: require('./modules/v1.0/services/ReviewsService'),
+    SessionService: require('./modules/v1.0/services/SessionService'),
     SwaggerDefinitions: require('./modules/v1.0/services/SwaggerDefinitions'),
     TaskService: require('./modules/v1.0/services/TaskService'),
     UserAccountsService: require('./modules/v1.0/services/UserAccountsService'),
@@ -139,6 +141,24 @@ const server = function () {
         caseSensitive: true // https://www.fastify.io/docs/latest/Server/#casesensitive
     })
 
+    /* read the env file :  */
+    // instance.register(fastifyEnv, {
+    //     dotenv: {
+    //         path: `${__dirname}/.env`,
+    //         debug: true
+    //     },
+    //     schema: {
+    //         type: 'object',
+    //         required: [ 'APP_PORT' ],
+    //         properties: {
+    //         PORT: {
+    //             type: 'string',
+    //             default: 3000
+    //         }
+    //         }
+    //     }
+    // })
+
     // register form parser (application/x-www-form-urlencoded)
     instance.register(formbody)
 
@@ -159,27 +179,14 @@ const server = function () {
             url: process.env.REDIS_URI
         })
 
+    // register jwt https://github.com/fastify/fastify-jwt
+    instance.register(require('fastify-jwt'), {
+        secret: process.env.APP_KEY
+    })
+
     /* Helmet : https://github.com/fastify/fastify-helmet */
     instance.register(helmet, {
         hidePoweredBy: { setTo: 'XHTML-5.10' }
-    })
-
-    /* read the env file :  */
-    instance.register(fastifyEnv, {
-        dotenv: {
-            path: `${__dirname}/.env`,
-            debug: true
-        },
-        schema: {
-            type: 'object',
-            required: [ 'APP_PORT' ],
-            properties: {
-            PORT: {
-                type: 'string',
-                default: 3000
-            }
-            }
-        }
     })
 
     /* db postgresql : https://github.com/fastify/fastify-postgres */

@@ -163,7 +163,6 @@ class UserAccountsModel extends Models {
             }
             const sql = `SELECT * FROM ${this.tableName} WHERE ${criteria} LIMIT 1`
             let data = await this.execquery(sql, params)
-            debugger
             return data.rows[0]
         } catch (err) {
             throw err

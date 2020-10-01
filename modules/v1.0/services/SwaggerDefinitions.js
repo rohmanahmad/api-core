@@ -18,7 +18,7 @@ const definitions = {
         name: {type: 'string'},
         // O
         otp_code: {type: 'string'},
-        otp_method: {type: 'string', example: 'email / whatsapp'},
+        otp_method: {type: 'string', enum: ['email', 'whatsapp']},
         // P
         page: {type: 'number'},
         pagination: {type: 'string', enum: ['yes', 'no']},

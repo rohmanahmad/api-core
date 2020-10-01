@@ -114,6 +114,7 @@ const routes = [
                                             metadata: {type: 'object', properties: {
                                                 detail_url: {type: 'string', example: '/api/product/detail/1'},
                                                 is_new: {type: 'boolean', example: false},
+                                                is_free_shipping: {type: 'boolean', example: false},
                                                 is_flash: {type: 'boolean', example: false}, // blm di tentukan formula
                                                 is_limited: {type: 'boolean', example: false} // blm di tentukan formula
                                             }}

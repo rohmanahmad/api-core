@@ -141,7 +141,6 @@ class OTPCodeModel extends Models {
                 (${andStatement1})
             LIMIT 1`
             const q = await this.execquery(sql, [otp, type, userid, 0])
-            debugger
             return q && q.rows && q.rows[0] ? q.rows[0] : null
         } catch (err) {
             throw err

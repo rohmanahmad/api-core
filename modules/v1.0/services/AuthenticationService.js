@@ -25,7 +25,7 @@ class AuthenticationService extends Services {
                 data: {
                     messageText: `Mohon Cek ${method} Untuk Melakukan Validasi OTP`,
                     status: 'sent',
-                    otp_dev: otp
+                    otp_dev: otp // to_be_deleted : dihapus jika sudah ready production
                 }
             }
         } catch (err) {
@@ -43,6 +43,7 @@ class AuthenticationService extends Services {
             const userdata = await OTPCodeModel(this.instance).findUserOTPByType({type: 'whatsapp', userid: user.id, otp})
             if (!userdata) throw new Error('Invalid Code')
             if (userdata.is_blocked) throw new Error('Account kamu Terblokir, Harap Hubungi Support Kami Untuk Pemulihan.')
+            const SessionService = this.instance.include('services', 'SessionService')(this.instance)
             let responseData = {}
             responseData['type'] = 'customer'
             responseData['need_update_profile'] = false
@@ -54,6 +55,7 @@ class AuthenticationService extends Services {
                 const data = await CustomerListModel(this.instance).findById(userdata.customer_id)
                 if (!data) responseData['need_update_profile'] = true
             }
+            responseData['token'] = this.instance.jwt.sign({payload: {userid: userdata.id }})
             return {
                 statusCode: 200,
                 message: 'OK',
