@@ -49,13 +49,16 @@ const routes = [
                     properties: {
                         statusCode: {type: 'number'},
                         message: {type: 'string'},
-                        data: {type: 'object', properties: {
-                            type: { type: 'string' },
-                            need_update_profile: { type: 'boolean' },
-                            go_to: { type: 'string', example: '/dashboard > available if need_update_profile = false' },
-                            token: { type: 'string', example: 'hash with >30 char'},
-                            valid_until: { type: 'string', example: '2020-02-01 23:00:21'}
-                        }}
+                        data: {
+                            type: 'object',
+                            properties: {
+                                type: { type: 'string' },
+                                need_update_profile: { type: 'boolean' },
+                                go_to: { type: 'string', example: '/dashboard > available if need_update_profile = false' },
+                                token: { type: 'string', example: 'hash with >30 char'},
+                                valid_until: { type: 'string', example: '2020-02-01 23:00:21'}
+                            }
+                        }
                     }
                 }
             }
